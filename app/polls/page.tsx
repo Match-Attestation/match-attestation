@@ -1,5 +1,5 @@
 import {kv} from "@vercel/kv";
-import {Poll} from "@/app/types";
+import {Match} from "@/app/types";
 import Link from "next/link";
 
 const SEVEN_DAYS_IN_MS = 1000 * 60 * 60 * 24 * 7;
@@ -17,7 +17,7 @@ async function getPolls() {
             multi.hgetall(`poll:${id}`);
         });
 
-        let items: Poll[] = await multi.exec();
+        let items: Match[] = await multi.exec();
         return items.map((item) => {
             return {...item};
         });

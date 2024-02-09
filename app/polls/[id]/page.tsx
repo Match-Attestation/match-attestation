@@ -1,26 +1,21 @@
 import {kv} from "@vercel/kv";
-import {Poll} from "@/app/types";
+import {Match} from "@/app/types";
 import {PollVoteForm} from "@/app/form";
 import Head from "next/head";
 import {Metadata, ResolvingMetadata} from "next";
 
-async function getPoll(id: string): Promise<Poll> {
+async function getPoll(id: string): Promise<Match> {
     let nullPoll = {
         id: "",
         title: "No poll found",
-        option1: "",
-        option2: "",
-        option3: "",
-        option4: "",
-        votes1: 0,
-        votes2: 0,
-        votes3: 0,
-        votes4: 0,
         created_at: 0,
+        users: [],
+        winner: "",
+        referee: "",
     };
 
     try {
-        let poll: Poll | null = await kv.hgetall(`poll:${id}`);
+        let poll: Match | null = await kv.hgetall(`poll:${id}`);
 
         if (!poll) {
             return nullPoll;
@@ -51,7 +46,7 @@ export async function generateMetadata(
         "fc:frame:post_url": `${process.env['HOST']}/api/vote?id=${id}`,
         "fc:frame:image": `${process.env['HOST']}/api/image?id=${id}`,
     };
-    [poll.option1, poll.option2, poll.option3, poll.option4].filter(o => o !== "").map((option, index) => {
+    poll.users.filter(o => o !== "").map((option, index) => {
         fcMetadata[`fc:frame:button:${index + 1}`] = option;
     })
 

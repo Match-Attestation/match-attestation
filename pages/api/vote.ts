@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import {Poll, MATCH_EXPIRY} from "@/app/types";
+import {Match, MATCH_EXPIRY} from "@/app/types";
 import {kv} from "@vercel/kv";
 import {getSSLHubRpcClient, Message} from "@farcaster/hub-nodejs";
 
@@ -63,7 +63,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 await multi.exec();
             }
 
-            let poll: Poll | null = await kv.hgetall(`poll:${pollId}`);
+            let poll: Match | null = await kv.hgetall(`poll:${pollId}`);
 
             if (!poll) {
                 return res.status(400).send('Missing poll ID');
