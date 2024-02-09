@@ -64,7 +64,7 @@ export async function generateMetadata(
     }
 }
 function getMeta(
-    poll: Poll
+    poll: Match
 ) {
     // This didn't work for some reason
     return (
