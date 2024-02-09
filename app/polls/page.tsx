@@ -6,7 +6,7 @@ const SEVEN_DAYS_IN_MS = 1000 * 60 * 60 * 24 * 7;
 
 async function getPolls() {
     try {
-        let pollIds = await kv.zrange("polls_by_date", Date.now(), Date.now() - SEVEN_DAYS_IN_MS, {byScore: true, rev: true, count: 100, offset: 0});
+        let pollIds = await kv.zrange("matches_by_date", Date.now(), Date.now() - SEVEN_DAYS_IN_MS, {byScore: true, rev: true, count: 100, offset: 0});
 
         if (!pollIds.length) {
             return [];
@@ -40,7 +40,7 @@ export default async function Page() {
                         polls.map((poll) => {
                         // returns links to poll ids
                         return (<div key={poll.id}>
-                            <a href={`/polls/${poll.id}`} className="underline">
+                            <a href={`/matches/${poll.id}`} className="underline">
                                 <p className="text-md sm:text-xl mx-4">{poll.title}</p>
                             </a>
                         </div>)
