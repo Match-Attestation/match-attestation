@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import {Poll, POLL_EXPIRY} from "@/app/types";
+import {Match, MATCH_EXPIRY} from "@/app/types";
 import {kv} from "@vercel/kv";
 import {getSSLHubRpcClient, Message} from "@farcaster/hub-nodejs";
 
@@ -58,12 +58,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 let multi = kv.multi();
                 multi.hincrby(`poll:${pollId}`, `votes${buttonId}`, 1);
                 multi.sadd(`poll:${pollId}:voted`, fid);
-                multi.expire(`poll:${pollId}`, POLL_EXPIRY);
-                multi.expire(`poll:${pollId}:voted`, POLL_EXPIRY);
+                multi.expire(`poll:${pollId}`, MATCH_EXPIRY);
+                multi.expire(`poll:${pollId}:voted`, MATCH_EXPIRY);
                 await multi.exec();
             }
 
-            let poll: Poll | null = await kv.hgetall(`poll:${pollId}`);
+            let poll: Match | null = await kv.hgetall(`poll:${pollId}`);
 
             if (!poll) {
                 return res.status(400).send('Missing poll ID');

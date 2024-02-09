@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import sharp from 'sharp';
-import {Poll} from "@/app/types";
+import {Match} from "@/app/types";
 import {kv} from "@vercel/kv";
 import satori from "satori";
 import { join } from 'path';
@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(400).send('Missing poll ID');
         }
 
-        let poll: Poll | null = await kv.hgetall(`poll:${pollId}`);
+        let poll: Match | null = await kv.hgetall(`poll:${pollId}`);
 
 
         if (!poll) {
@@ -30,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         //     votedOption = await kv.hget(`poll:${pollId}:votes`, `${fid}`) as number
         // }
 
-        const pollOptions = [poll.option1, poll.option2, poll.option3, poll.option4]
+        const pollOptions = poll.users
             .filter((option) => option !== '');
         const totalVotes = pollOptions
             // @ts-ignore

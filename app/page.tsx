@@ -1,4 +1,4 @@
-import { PollCreateForm } from "./form";
+import { MatchCreateForm } from "./form";
 
 export let metadata = {
   title: "Farcaster polls",
@@ -109,7 +109,7 @@ export default async function Page() {
           Create a new Match with upto 20 People / Teams
         </h2>
         <div className="flex flex-wrap items-center justify-around max-w-4xl my-8 sm:w-full bg-white rounded-md shadow-xl h-full border border-gray-100">
-          <PollCreateForm />
+          <MatchCreateForm />
         </div>
       </main>
     </div>

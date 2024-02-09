@@ -2,37 +2,29 @@
 
 import { kv } from "@vercel/kv";
 import { revalidatePath } from "next/cache";
-import {Poll, POLL_EXPIRY} from "./types";
-import {redirect} from "next/navigation";
+import { Match, MATCH_EXPIRY } from "./types";
+import { redirect } from "next/navigation";
 
-export async function savePoll(poll: Poll, formData: FormData) {
-  let newPoll = {
-    ...poll,
-    created_at: Date.now(),
-    title: formData.get("title") as string,
-    option1: formData.get("option1") as string,
-    option2: formData.get("option2") as string,
-    option3: formData.get("option3") as string,
-    option4: formData.get("option4") as string,
-  }
-  await kv.hset(`poll:${poll.id}`, poll);
-  await kv.expire(`poll:${poll.id}`, POLL_EXPIRY);
-  await kv.zadd("polls_by_date", {
-    score: Number(poll.created_at),
-    member: newPoll.id,
+export async function saveMatch(match: Match) {
+  await kv.hset(`match:${match.id}`, match);
+  await kv.expire(`match:${match.id}`, MATCH_EXPIRY);
+  await kv.zadd("matches_by_date", {
+    score: Number(match.created_at),
+    member: match.id,
   });
 
-  revalidatePath("/polls");
-  redirect(`/polls/${poll.id}`);
+  revalidatePath("/matches");
+  redirect(`/matches/${match.id}`);
 }
 
-export async function votePoll(poll: Poll, optionIndex: number) {
-  await kv.hincrby(`poll:${poll.id}`, `votes${optionIndex}`, 1);
+// TODO: Rework to work with the new API
+export async function attestMatch(match: Match, winnerId: string) {
+  await kv.hset(`match:${match.id}`, { winner: winnerId });
 
-  revalidatePath(`/polls/${poll.id}`);
-  redirect(`/polls/${poll.id}?results=true`);
+  revalidatePath(`/matches/${match.id}`);
+  redirect(`/matches/${match.id}?results=true`);
 }
 
-export async function redirectToPolls() {
-  redirect("/polls");
+export async function redirectToMatches() {
+  redirect("/matches");
 }
