@@ -143,26 +143,19 @@ export function MatchCreateForm() {
 }
 
 function PollOptions({
-  poll,
+  match,
   onChange,
 }: {
-  poll: Match;
+  match: Match;
   onChange: (index: number) => void;
 }) {
   return (
     <div className="mb-4 text-left">
-      {[poll.option1, poll.option2, poll.option3, poll.option4]
+      {match.users
         .filter((e) => e !== "")
-        .map((option, index) => (
+        .map((user, index) => (
           <label key={index} className="block">
-            <input
-              type="radio"
-              name="poll"
-              value={option}
-              onChange={() => onChange(index + 1)}
-              className="mr-2"
-            />
-            {option}
+            {user}
           </label>
         ))}
     </div>
@@ -216,7 +209,7 @@ export function PollVoteForm({
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg p-4 m-4">
       <div className="font-bold text-xl mb-2">{poll.title}</div>
-      <form
+      {/* <form
         className="relative my-8"
         ref={formRef}
         action={() => voteOnPoll(selectedOption)}
@@ -267,7 +260,7 @@ export function PollVoteForm({
             Vote
           </button>
         )}
-      </form>
+      </form> */}
     </div>
   );
 }
