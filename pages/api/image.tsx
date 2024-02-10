@@ -48,7 +48,7 @@ export default async function handler(
         <div
           style={{
             display: "flex",
-            fontSize: 32,
+            flexDirection: "column",
             borderRadius: 24,
             marginBottom: 20,
             backgroundColor: "white",
@@ -57,7 +57,8 @@ export default async function handler(
             boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
           }}
         >
-          Match Details
+          <div style={{ fontSize: 16 }}>Title</div>
+          <div style={{ fontSize: 32, marginTop: 4 }}>{match.title}</div>
         </div>
         <div
           style={{
@@ -85,8 +86,12 @@ export default async function handler(
                 boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <div style={{ fontSize: 16 }}>Title</div>
-              <div style={{ fontSize: 32, marginTop: 4 }}>{match.title}</div>
+              <div style={{ fontSize: 16 }}>Winners</div>
+              <div style={{ fontSize: 24, marginTop: 4 }}>
+                {match.winners.length > 0
+                  ? match.winners.join(", ")
+                  : "No winners yet..."}
+              </div>
             </div>
             <div
               style={{
@@ -103,13 +108,6 @@ export default async function handler(
             >
               <div style={{ fontSize: 16 }}>Referee</div>
               <div style={{ fontSize: 24, marginTop: 4 }}>{match.referee}</div>
-
-              <div style={{ fontSize: 16, marginTop: 12 }}>Winners</div>
-              <div style={{ fontSize: 24, marginTop: 4 }}>
-                {match.winners.length > 0
-                  ? match.winners.join(", ")
-                  : "No winners yet..."}
-              </div>
 
               <div style={{ fontSize: 16, marginTop: 12 }}>Start Date</div>
               <div style={{ fontSize: 24, marginTop: 4 }}>
