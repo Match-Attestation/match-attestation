@@ -3,6 +3,7 @@ import { Match } from "@/app/types";
 import { DecideMatchWinnerForm } from "@/app/form";
 import { MatchAttestationLogo } from "@/app/page";
 import { Metadata, ResolvingMetadata } from "next";
+import { getFrameMetadata } from "@coinbase/onchainkit";
 
 async function getMatch(id: string): Promise<Match> {
   let nullMatch: Match = {
@@ -40,14 +41,17 @@ export async function generateMetadata(
   const id = params.id;
   const match = await getMatch(id);
 
-  const fcMetadata: Record<string, string> = {
-    "fc:frame": "vNext",
-    "fc:frame:post_url": `${process.env["HOST"]}/api/attest?id=${id}/`,
-    "fc:frame:image": `${process.env["HOST"]}/api/image?id=${id}/`,
-    "fc:frame:input:text": "Comma separated list of winners",
-    "fc:frame:button:1": "Attest match",
-    "fc:frame:image:aspect_ratio": "1:1",
-  };
+  const fcMetadata = getFrameMetadata({
+    buttons: [{ action: "post", label: "Attest match" }],
+    image: {
+      src: `${process.env["HOST"]}/api/image?id=${id}`,
+      aspectRatio: "1:1",
+    },
+    input: {
+      text: "Comma separated list of winners",
+    },
+    postUrl: `${process.env["HOST"]}/api/attest?id=${id}`,
+  });
 
   return {
     title: match.title,

@@ -5,9 +5,6 @@ import { kv } from "@vercel/kv";
 import { ethers } from "ethers";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 
-import { NextRequest, NextResponse } from 'next/server';
-import { headers } from 'next/headers';
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
@@ -15,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let matchId = req.query["id"] as string;
     if (!matchId) {
-        return res.status(400).json({ error: 'Missing match ID' });
+        return res.status(418).json({ error: 'Missing match ID' });
     }
 
     let match: Match | null = null;
@@ -23,11 +20,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         match = await kv.get(matchId);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Match not found' });
+        return res.status(500).json({ error: 'Failed to retrieve match' });
     }
 
     if (!match) {
-        return res.status(400).json({ error: 'Match not found' });
+        return res.status(499).json({ error: 'Match not found' });
     }
 
     const body: FrameRequest = await req.body.json();
@@ -37,13 +34,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     if (!isValid) {
-        return res.status(400).json({ error: 'Invalid frame message' });
+        return res.status(406).json({ error: 'Invalid frame message' });
     }
 
     const { input, interactor, liked, recasted } = message;
 
     if (!input) {
-        return res.status(400).json({ error: 'Invalid input' });
+        return res.status(406).json({ error: 'Invalid input' });
     }
 
     if (!liked || !recasted) {
@@ -56,11 +53,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let winners = input.trim().split(',').map((i) => parseInt(i));
     if (winners.length < 1) {
-        return res.status(400).json({ error: 'Invalid input' });
+        return res.status(406).json({ error: 'Invalid input' });
     }
 
     if (match.created_at + MATCH_EXPIRY < Date.now()) {
-        return res.status(400).json({ error: 'Match expired' });
+        return res.status(412).json({ error: 'Match expired' });
     }
 
     let winnersIds = winners.map((i) => match?.users[i - 1]);
@@ -130,3 +127,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         )
     }
 }
+
