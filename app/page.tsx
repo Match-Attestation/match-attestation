@@ -106,7 +106,7 @@ export default async function Page() {
           Farcaster Match attestation
         </h1>
         <h2 className="text-md sm:text-xl mx-4">
-          Create a Match with up to 20 Participants,
+          Create a Match with up to 16 Participants,
           <br />
           with the results published on blockchain
         </h2>
