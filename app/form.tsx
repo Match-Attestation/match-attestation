@@ -9,21 +9,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 type MatchState = {
   newMatch: Match;
-  updatedMatch?: Match;
   pending: boolean;
   voted?: boolean;
 };
 
 export function MatchCreateForm() {
   let formRef = useRef<HTMLFormElement>(null);
-  let [state, mutate] = useOptimistic(
-    { pending: false },
-    function createReducer(state, newMatch: MatchState) {
-      return {
-        pending: newMatch.pending,
-      };
-    }
-  );
 
   let matchStub = {
     id: uuidv4(),
@@ -33,6 +24,15 @@ export function MatchCreateForm() {
     winner: "",
     referee: "",
   };
+
+  let [state, mutate] = useOptimistic(
+    { pending: false, newMatch: matchStub },
+    function createReducer(state, newMatch: MatchState) {
+      return {
+        ...newMatch,
+      };
+    }
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let [isPending, startTransition] = useTransition();
