@@ -55,23 +55,27 @@ export default async function handler(
             <h2>Like and recast the match to attest</h2>
           )}
           {refereeAttestationSuccess && <h2>Attested successfully</h2>}
+          <h1>Title</h1>
           <h2>{match.title}</h2>
+          <h1>Users</h1>
           <div
             style={{
               display: "flex",
-              flexDirection: "column",
+              flexDirection: "row",
             }}
           ></div>
           {match.users.map((user, index) => {
             return (
-              <div style={{ marginTop: 6 }}>{index + 1 + ". " + user}</div>
+              <div style={{ marginTop: 6, marginRight: 4 }}>
+                {index + 1 + ". " + user}
+              </div>
             );
           })}
         </div>
       </div>,
       {
         width: 600,
-        height: 400,
+        height: 540,
         fonts: [
           {
             data: fontData,
