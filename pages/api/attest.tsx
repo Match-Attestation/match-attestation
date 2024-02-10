@@ -43,13 +43,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(494).json({ error: 'Invalid input' });
     }
 
-    if (!recasted) {
-        return res.json(
-            getFrameHtmlResponse({
-                image: `${process.env["HOST"]}/api/image?id=${matchId}&likeAndRecastRequired=true`,
-            })
-        )
-    }
+    // if (!liked || !recasted) {
+    //     return res.json(
+    //         getFrameHtmlResponse({
+    //             image: `${process.env["HOST"]}/api/image?id=${matchId}&likeAndRecastRequired=true`,
+    //         })
+    //     )
+    // }
 
     let winners = input.trim().split(',').map((i) => parseInt(i));
     if (winners.length < 1) {
