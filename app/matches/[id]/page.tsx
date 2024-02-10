@@ -81,7 +81,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <h2 className="text-md sm:text-xl mx-4">
           Create a Match with up to 20 Participants,
           <br />
-          with the results published on the blockchain
+          with the results published on blockchain
         </h2>
         <div
           className="flex flex-wrap items-center justify-around my-8 w-full bg-white rounded-md shadow-xl h-full border border-gray-100"
