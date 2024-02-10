@@ -84,14 +84,14 @@ export function MatchCreateForm() {
     <>
       <div className="mx-4 sm:mx-8 w-full">
         <form
-          className="relative mt-8 mb-6"
+          className="relative mt-6 sm:mt-8 mb-6"
           ref={formRef}
           onSubmit={handleSubmit}
         >
           <div className="text-left text-xl font-bold">Title</div>
           <input
             aria-label="Match Title"
-            className="px-3 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
+            className="px-3 py-2 sm:py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
             maxLength={150}
             placeholder="Describe your match..."
             required
@@ -102,7 +102,7 @@ export function MatchCreateForm() {
           <div className="text-left text-xl font-bold mt-4">Referee</div>
           <input
             aria-label="Match Referee"
-            className="px-3 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
+            className="px-3 py-2 sm:py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
             maxLength={150}
             placeholder="User who will decide the winner..."
             required
@@ -121,7 +121,7 @@ export function MatchCreateForm() {
                 value={user}
                 onChange={(e) => handleUserChange(index, e.target.value)}
                 required
-                className="flex px-3 py-3 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
+                className="flex px-3 py-2 sm:py-3 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
                 placeholder={`Participant №${index + 1}`}
                 aria-label={`Participant №${index + 1}`}
                 type="text"
