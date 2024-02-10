@@ -39,18 +39,16 @@ export default async function handler(
           alignItems: "center",
           width: "100%",
           height: "100%",
-          backgroundColor: "#f4f4f4",
+          backgroundColor: "#f9fafb",
           padding: 12,
           lineHeight: 1.2,
           fontSize: 24,
-          color: "lightgray",
+          color: "black",
         }}
       >
         <div
           style={{
             fontSize: 32,
-            fontWeight: "bold",
-            color: "black",
             marginBottom: 20,
           }}
         >
@@ -63,7 +61,6 @@ export default async function handler(
             backgroundColor: "white",
             padding: "20px 24px",
             borderRadius: "10px",
-            color: "black",
             maxWidth: "90%",
           }}
         >
