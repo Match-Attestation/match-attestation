@@ -113,7 +113,7 @@ export function MatchCreateForm() {
           ))}
           <div className="flex space-x-4 mt-4">
             <button
-              className={`w-1/2 flex items-center p-1 justify-center px-4 h-10 text-lg border bg-blue-500 text-white rounded-md w-24 focus:outline-none focus:ring focus:ring-blue-300 hover:bg-blue-700 focus:bg-blue-700 ${
+              className={`w-1/2 flex items-center p-1 justify-center px-4 h-10 text-lg border bg-blue-500 text-white rounded-md  focus:outline-none focus:ring focus:ring-blue-300 hover:bg-blue-700 focus:bg-blue-700 ${
                 state.pending ? "bg-gray-700 cursor-not-allowed" : ""
               }`}
               type="button"
@@ -133,7 +133,7 @@ export function MatchCreateForm() {
             </button>
 
             <button
-              className={`w-1/2 flex items-center p-1 justify-center px-4 h-10 text-lg border bg-blue-500 text-white rounded-md w-24 focus:outline-none focus:ring focus:ring-blue-300 hover:bg-blue-700 focus:bg-blue-700 ${
+              className={`w-1/2 flex items-center p-1 justify-center px-4 h-10 text-lg border bg-blue-500 text-white rounded-md focus:outline-none focus:ring focus:ring-blue-300 hover:bg-blue-700 focus:bg-blue-700 ${
                 state.pending ? "bg-gray-700 cursor-not-allowed" : ""
               }`}
               type="submit"
