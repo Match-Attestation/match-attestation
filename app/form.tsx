@@ -39,7 +39,6 @@ export function MatchCreateForm() {
     winner: "",
     referee: "",
   };
-  let saveWithNewMatch = saveMatch.bind(null, matchStub);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let [isPending, startTransition] = useTransition();
 
@@ -49,14 +48,15 @@ export function MatchCreateForm() {
         <form
           className="relative mt-8 mb-6"
           ref={formRef}
-          action={saveWithNewMatch}
           onSubmit={(event) => {
             event.preventDefault();
             let formData = new FormData(event.currentTarget);
             let newMatch = {
               ...matchStub,
               title: formData.get("title") as string,
-              users: formData.getAll("users") as string[],
+              users: formData
+                .getAll("users")
+                .filter((user) => user !== "") as string[],
               referee: formData.get("referee") as string,
             };
 
@@ -71,24 +71,29 @@ export function MatchCreateForm() {
             });
           }}
         >
+          <div className="text-left text-xl font-bold">Title</div>
           <input
             aria-label="Match Title"
             className="pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
             maxLength={150}
-            placeholder="Title..."
+            placeholder="Describe your match..."
             required
             type="text"
             name="title"
           />
+
+          <div className="text-left text-xl font-bold mt-4">Referee</div>
           <input
             aria-label="Match Referee"
             className="pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
             maxLength={150}
-            placeholder="Referee"
+            placeholder="User who will decide the winner..."
             required
             type="text"
             name="referee"
           />
+
+          <div className="text-left text-xl font-bold mt-4">Users</div>
           <input
             aria-label="User 1"
             className="pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
