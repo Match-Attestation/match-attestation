@@ -94,7 +94,7 @@ export function MatchCreateForm() {
           <input
             aria-label="Match Title"
             className="px-3 py-2 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
-            maxLength={150}
+            maxLength={130}
             placeholder="Describe your match..."
             required
             type="text"
@@ -105,7 +105,7 @@ export function MatchCreateForm() {
           <input
             aria-label="Match Referee"
             className="px-3 py-2 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
-            maxLength={150}
+            maxLength={80}
             placeholder="User who will decide the winner..."
             required
             type="text"
@@ -129,7 +129,7 @@ export function MatchCreateForm() {
                 placeholder={`Participant №${index + 1}`}
                 aria-label={`Participant №${index + 1}`}
                 type="text"
-                maxLength={150}
+                maxLength={80}
               />
               {state.newMatch.users.length > 2 && (
                 <button
@@ -225,7 +225,7 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
         <div className="text-left flex text-md">
           {new Date(Number(match.created_at) + MATCH_EXPIRY)
             .toUTCString()
-            .slice(5, 17) + " (UTC)"}
+            .slice(5, 23) + " (UTC)"}
         </div>
         <img className="mt-4 w-full" src={`/api/image?id=${match.id}`} />
         <div className="actions mt-4">
