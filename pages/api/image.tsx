@@ -26,8 +26,6 @@ export default async function handler(
       return res.status(400).send("Missing match ID");
     }
 
-    const showResults = req.query["results"] === "true";
-
     const svg = await satori(
       <div
         style={{
