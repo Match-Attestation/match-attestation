@@ -15,11 +15,7 @@ async function getMatch(id: string): Promise<Match> {
   };
 
   try {
-    console.log(id);
-
     let match: Match | null = await kv.hgetall(`match:${id}`);
-
-    console.log(match);
 
     if (!match) {
       return nullMatch;
