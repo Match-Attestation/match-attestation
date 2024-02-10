@@ -58,7 +58,14 @@ export default async function handler(
           }}
         >
           <div style={{ fontSize: 16 }}>Title</div>
-          <div style={{ fontSize: 32, marginTop: 2 }}>{match.title}</div>
+          <div
+            style={{
+              fontSize: match.title.length > 80 ? 24 : 32,
+              marginTop: 2,
+            }}
+          >
+            {match.title}
+          </div>
         </div>
         <div
           style={{
@@ -152,7 +159,13 @@ export default async function handler(
           >
             <div style={{ fontSize: 16 }}>Participants</div>
             {match.users.map((user, index) => (
-              <div key={index} style={{ fontSize: 24, marginTop: 4 }}>
+              <div
+                key={index}
+                style={{
+                  fontSize: match && match.users.length > 10 ? 20 : 24,
+                  marginTop: 4,
+                }}
+              >
                 {index + 1 + ". " + user}
               </div>
             ))}
