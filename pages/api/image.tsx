@@ -35,7 +35,6 @@ export default async function handler(
         style={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
           alignItems: "center",
           width: "100%",
           height: "100%",
@@ -52,6 +51,9 @@ export default async function handler(
             fontSize: 32,
             borderRadius: 24,
             marginBottom: 20,
+            backgroundColor: "white",
+            width: "100%",
+            boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
           }}
         >
           Match Details
