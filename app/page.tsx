@@ -106,7 +106,7 @@ export default async function Page() {
           Farcaster Match attestation
         </h1>
         <h2 className="text-md sm:text-xl mx-4">
-          Create a new Match with upto 20 People / Teams
+          Create a new Match with up to 20 People / Teams
         </h2>
         <div className="flex flex-wrap items-center justify-around max-w-4xl my-8 w-full bg-white rounded-md shadow-xl h-full border border-gray-100">
           <MatchCreateForm />
