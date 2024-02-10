@@ -66,13 +66,13 @@ export async function generateMetadata(
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const poll = await getMatch(params.id);
+  const match = await getMatch(params.id);
 
   return (
     <>
       <div className="flex flex-col items-center justify-center min-h-screen py-2">
         <main className="flex flex-col items-center justify-center flex-1 px-4 sm:px-20 text-center">
-          <DecideMatchWinnerForm match={poll} />
+          <DecideMatchWinnerForm match={match} />
         </main>
       </div>
     </>

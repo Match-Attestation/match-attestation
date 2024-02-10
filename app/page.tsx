@@ -1,8 +1,8 @@
 import { MatchCreateForm } from "./form";
 
 export let metadata = {
-  title: "Farcaster polls",
-  description: "Poll example for farcaster",
+  title: "Farcaster match attestation",
+  description: "Match attestation for farcaster",
 };
 
 function MatchAttestationLogo(props: React.SVGProps<SVGSVGElement>) {

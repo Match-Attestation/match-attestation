@@ -10,7 +10,6 @@ type MatchState = {
   newMatch: Match;
   pending: boolean;
   maxUsersCount: number;
-  winnerDecided?: boolean;
 };
 
 export function MatchCreateForm() {
