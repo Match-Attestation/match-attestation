@@ -10,12 +10,12 @@ import { headers } from 'next/headers';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'POST') {
-        return NextResponse.json({ error: 'Invalid method' }, { status: 405 }, headers({ Allow: 'POST' });
+        return res.status(405).json({ error: 'Method not allowed' });
     }
 
     let matchId = req.query["id"] as string;
     if (!matchId) {
-        return NextResponse.json({ error: 'Missing match ID' }, { status: 400 });
+        return res.status(400).json({ error: 'Missing match ID' });
     }
 
     let match: Match | null = null;
@@ -23,11 +23,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         match = await kv.get(matchId);
     } catch (error) {
         console.error(error);
-        return NextResponse.json({ error: 'Match not found' }, { status: 404 });
+        return res.status(500).json({ error: 'Match not found' });
     }
 
     if (!match) {
-        return NextResponse.json({ error: 'Match not found' }, { status: 404 });
+        return res.status(400).json({ error: 'Match not found' });
     }
 
     const body: FrameRequest = await req.body.json();
@@ -37,17 +37,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     if (!isValid) {
-        return NextResponse.json({ error: 'Invalid message' }, { status: 400 });
+        return res.status(400).json({ error: 'Invalid frame message' });
     }
 
     const { input, interactor, liked, recasted } = message;
 
     if (!input) {
-        return NextResponse.json({ error: 'Missing input' }, { status: 400 });
+        return res.status(400).json({ error: 'Invalid input' });
     }
 
     if (!liked || !recasted) {
-        return new NextResponse(
+        return res.json(
             getFrameHtmlResponse({
                 image: `${process.env["HOST"]}/api/image?id=${matchId}&likeAndRecastRequired=true`,
             })
@@ -56,11 +56,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let winners = input.trim().split(',').map((i) => parseInt(i));
     if (winners.length < 1) {
-        return NextResponse.json({ error: 'Invalid winners' }, { status: 400 });
+        return res.status(400).json({ error: 'Invalid input' });
     }
 
     if (match.created_at + MATCH_EXPIRY < Date.now()) {
-        return NextResponse.json({ error: 'Match expired' }, { status: 400 });
+        return res.status(400).json({ error: 'Match expired' });
     }
 
     let winnersIds = winners.map((i) => match?.users[i - 1]);
@@ -68,14 +68,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (String(interactor.fid) === match.referee) {
         try {
             await kv.set(matchId, { ...match, winners: winnersIds });
-            return new NextResponse(
+            return res.json(
                 getFrameHtmlResponse({
                     image: `${process.env["HOST"]}/api/image?id=${matchId}&refereeAttestationSuccess=true`,
                 })
             )
         } catch (error) {
             console.error(error);
-            return NextResponse.json({ error: 'Failed to update match' }, { status: 500 });
+            return res.status(500).json({ error: 'Failed to attest' });
         }
     } else {
         // Attest to win
@@ -123,7 +123,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         console.log("New attestation UID:", newAttestationUID);
 
-        return new NextResponse(
+        return res.json(
             getFrameHtmlResponse({
                 image: `${process.env["HOST"]}/api/image?id=${matchId}&attestationUID=${newAttestationUID}`,
             })
