@@ -67,8 +67,7 @@ export default async function handler(
             maxWidth: "90%",
           }}
         >
-          <div style={{ fontSize: 20 }}>Title</div>
-          <div style={{ fontSize: 24, marginTop: 4 }}>{match.title}</div>
+          <div style={{ fontSize: 32 }}>{match.title}</div>
 
           <div style={{ fontSize: 20, marginTop: 12 }}>Referee</div>
           <div style={{ fontSize: 24, marginTop: 4 }}>{match.referee}</div>
@@ -80,14 +79,14 @@ export default async function handler(
             </div>
           ))}
 
-          <div style={{ fontSize: 20, marginTop: 12 }}>Winners 🏆</div>
+          <div style={{ fontSize: 20, marginTop: 12 }}>Winners</div>
           <div style={{ fontSize: 24, marginTop: 4 }}>
             {match.winners.length > 0
               ? match.winners.join(", ")
               : "No winners yet..."}
           </div>
 
-          <div style={{ fontSize: 20, marginTop: 12 }}>Start Date:</div>
+          <div style={{ fontSize: 20, marginTop: 12 }}>Start Date</div>
           <div style={{ fontSize: 24, marginTop: 4 }}>
             {new Date(Number(match.created_at)).toLocaleString()}
           </div>

@@ -101,7 +101,7 @@ export function MatchCreateForm() {
             name="title"
           />
 
-          <div className="text-left text-xl font-bold mt-4">Referee</div>
+          <div className="text-left text-xl font-bold mt-4">Referee 👩‍⚖️</div>
           <input
             aria-label="Match Referee"
             className="px-3 py-2 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
@@ -111,7 +111,9 @@ export function MatchCreateForm() {
             type="text"
             name="referee"
           />
-          <div className="text-left text-xl font-bold mt-4">Participants</div>
+          <div className="text-left text-xl font-bold mt-4">
+            Participants 🥷
+          </div>
           {state.newMatch.users.map((user, index) => (
             <div
               className={`flex items-center space-x-2 ${
@@ -205,9 +207,9 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
       <div className="relative mt-6 sm:mt-8 mb-6">
         <div className="text-left text-xl font-bold">Title</div>
         <div className="text-left flex text-md">{match.title}</div>
-        <div className="text-left text-xl font-bold mt-4">Referee</div>
+        <div className="text-left text-xl font-bold mt-4">Referee 👩‍⚖️</div>
         <div className="text-left flex text-md">{match.referee}</div>
-        <div className="text-left text-xl font-bold mt-4">Participants</div>
+        <div className="text-left text-xl font-bold mt-4">Participants 🥷</div>
         <div className="text-left flex flex-col text-md">
           {match.users.map((user, index) => (
             <div key={index}>{index + 1 + ". " + user}</div>
@@ -219,7 +221,7 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
             ? match.winners.join(", ")
             : "No winners yet..."}
         </div>
-        <div className="text-left text-xl font-bold mt-4">Start date</div>
+        <div className="text-left text-xl font-bold mt-4">Start date ⏱️</div>
         <div className="text-left flex text-md">
           {new Date(Number(match.created_at)).toLocaleString()}
         </div>
