@@ -33,45 +33,44 @@ export default async function handler(
     const svg = await satori(
       <div
         style={{
-          justifyContent: "flex-start",
-          alignItems: "center",
           display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
           width: "100%",
           height: "100%",
-          backgroundColor: "f4f4f4",
+          backgroundColor: "#f4f4f4",
           padding: 12,
           lineHeight: 1.2,
           fontSize: 24,
           color: "lightgray",
         }}
       >
+        <h1 style={{ color: "black", fontSize: 32 }}>Match Details</h1>
         <div
           style={{
             display: "flex",
             flexDirection: "column",
+            backgroundColor: "white",
+            padding: "20px",
+            borderRadius: "10px",
+            color: "black",
           }}
         >
-          {likeAndRecastRequired && (
-            <h2>Like and recast the match to attest</h2>
-          )}
-          {refereeAttestationSuccess && <h2>Attested successfully</h2>}
-          <h1>Title</h1>
-          <h2>{match.title}</h2>
-          <h1>Users</h1>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-            }}
-          >
-            {match.users.map((user, index) => {
-              return (
-                <div style={{ marginTop: 6, marginRight: 4 }}>
-                  {index + 1 + ". " + user}
-                </div>
-              );
-            })}
-          </div>
+          <h2>Title: {match.title}</h2>
+          <h2>Referee: {match.referee}</h2>
+          <h2>Participants:</h2>
+          {match.users.map((user, index) => (
+            <p key={index}>{index + 1 + ". " + user}</p>
+          ))}
+          <h2>Winners:</h2>
+          <p>
+            {match.winners.length > 0
+              ? match.winners.join(", ")
+              : "No winners yet..."}
+          </p>
+          <h2>Start Date:</h2>
+          <p>{new Date(Number(match.created_at)).toLocaleString()}</p>
         </div>
       </div>,
       {
