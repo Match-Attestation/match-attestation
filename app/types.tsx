@@ -3,7 +3,7 @@ export type Match = {
   title: string;
   created_at: number;
   users: Array<string>;
-  winner: string;
+  winners: Array<string>;
   referee: string;
 };
 

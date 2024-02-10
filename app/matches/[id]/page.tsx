@@ -1,6 +1,6 @@
 import { kv } from "@vercel/kv";
 import { Match } from "@/app/types";
-import { PollVoteForm } from "@/app/form";
+import { DecideMatchWinnerForm } from "@/app/form";
 import Head from "next/head";
 import { Metadata, ResolvingMetadata } from "next";
 
@@ -10,7 +10,7 @@ async function getPoll(id: string): Promise<Match> {
     title: "No poll found",
     created_at: 0,
     users: [],
-    winner: "",
+    winners: [],
     referee: "",
   };
 
@@ -81,7 +81,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     <>
       <div className="flex flex-col items-center justify-center min-h-screen py-2">
         <main className="flex flex-col items-center justify-center flex-1 px-4 sm:px-20 text-center">
-          <PollVoteForm poll={poll} />
+          <DecideMatchWinnerForm match={poll} />
         </main>
       </div>
     </>

@@ -18,8 +18,8 @@ export async function saveMatch(match: Match) {
 }
 
 // TODO: Rework to work with the new API
-export async function attestMatch(match: Match, winnerId: string) {
-  await kv.hset(`match:${match.id}`, { winner: winnerId });
+export async function attestMatch(match: Match, winnerIds: Array<string>) {
+  await kv.hset(`match:${match.id}`, { winners: winnerIds });
 
   revalidatePath(`/matches/${match.id}`);
   redirect(`/matches/${match.id}?results=true`);

@@ -12,7 +12,7 @@ type MatchState = {
   newMatch: Match;
   pending: boolean;
   maxUsersCount: number;
-  voted?: boolean;
+  winnerDecided?: boolean;
 };
 
 export function MatchCreateForm() {
@@ -23,7 +23,7 @@ export function MatchCreateForm() {
     created_at: new Date().getTime(),
     title: "",
     users: ["", ""],
-    winner: "",
+    winners: [],
     referee: "",
   };
 
@@ -221,57 +221,30 @@ function PollOptions({
   );
 }
 
-function PollResults({ poll }: { poll: Match }) {
+function MatchResults(match: Match) {
   return (
     <div className="mb-4">
       <img
-        src={`/api/image?id=${poll.id}&results=true&date=${Date.now()}`}
-        alt="poll results"
+        src={`/api/image?id=${match.id}&results=true&date=${Date.now()}`}
+        alt="match results"
       />
     </div>
   );
 }
 
-export function PollVoteForm({
-  poll,
-  viewResults,
-}: {
-  poll: Match;
-  viewResults?: boolean;
-}) {
-  const [selectedOption, setSelectedOption] = useState(-1);
+export function DecideMatchWinnerForm(match: Match) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  viewResults = true; // Only allow voting via the api
-  let formRef = useRef<HTMLFormElement>(null);
-  let voteOnPoll = attestMatch.bind(null, poll);
-  let [isPending, startTransition] = useTransition();
-  let [state, mutate] = useOptimistic(
-    { showResults: viewResults },
-    function createReducer({ showResults }, state: MatchState) {
-      if (state.voted || viewResults) {
-        return {
-          showResults: true,
-        };
-      } else {
-        return {
-          showResults: false,
-        };
-      }
-    }
-  );
 
-  const handleVote = (index: number) => {
-    setSelectedOption(index);
-  };
+  let formRef = useRef<HTMLFormElement>(null);
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg p-4 m-4">
       <div className="font-bold text-xl mb-2">{poll.title}</div>
-      {/* <form
+      <form
         className="relative my-8"
         ref={formRef}
-        action={() => voteOnPoll(selectedOption)}
+        action={() => decideMatchWinner(selectedOption)}
         onSubmit={(event) => {
           event.preventDefault();
           let formData = new FormData(event.currentTarget);
@@ -296,7 +269,7 @@ export function PollVoteForm({
         }}
       >
         {state.showResults ? (
-          <PollResults poll={poll} />
+          <MatchResults poll={poll} />
         ) : (
           <PollOptions poll={poll} onChange={handleVote} />
         )}
@@ -319,7 +292,7 @@ export function PollVoteForm({
             Vote
           </button>
         )}
-      </form> */}
+      </form>
     </div>
   );
 }
