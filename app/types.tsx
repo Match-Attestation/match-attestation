@@ -7,4 +7,4 @@ export type Match = {
   referee: string;
 };
 
-export const MATCH_EXPIRY = 60 * 60 * 24 * 180; // Expire polls after 3 months
+export const MATCH_EXPIRY = 60 * 60 * 24 * 180; // Expire match after 3 months
