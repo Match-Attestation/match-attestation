@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let match: Match | null = null;
     try {
-        match = await kv.get(matchId);
+        match = await kv.hgetall(`match:${matchId}`);
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: 'Failed to retrieve match' });
