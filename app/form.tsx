@@ -5,12 +5,28 @@ import { useOptimistic, useRef, useState, useTransition } from "react";
 import { saveMatch } from "./actions";
 import { v4 as uuidv4 } from "uuid";
 import { Match } from "./types";
+import LiveSearch from "./selector";
 
 type MatchState = {
   newMatch: Match;
   pending: boolean;
   maxUsersCount: number;
 };
+//
+const profiles = [
+  { id: "1", name: "Allie Grater" },
+  { id: "2", name: "Aida Bugg" },
+  { id: "3", name: "Gabrielle" },
+  { id: "4", name: "Grace" },
+  { id: "5", name: "Hannah" },
+  { id: "6", name: "Heather" },
+  { id: "7", name: "John Doe" },
+  { id: "8", name: "Anne Teak" },
+  { id: "9", name: "Audie Yose" },
+  { id: "10", name: "Addie Minstra" },
+  { id: "11", name: "Anne Ortha" },
+];
+//
 
 export function MatchCreateForm() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -30,6 +46,24 @@ export function MatchCreateForm() {
     maxUsersCount: 20,
   });
 
+  //
+  const [results, setResults] = useState<{ id: string; name: string }[]>();
+  const [selectedProfile, setSelectedProfile] = useState<{
+    id: string;
+    name: string;
+  }>();
+
+  type changeHandler = React.ChangeEventHandler<HTMLInputElement>;
+  const handleChange: changeHandler = (e) => {
+    const { target } = e;
+    if (!target.value.trim()) return setResults([]);
+
+    const filteredValue = profiles.filter((profile) =>
+      profile.name.toLowerCase().startsWith(target.value.toLowerCase())
+    );
+    setResults(filteredValue);
+  };
+  //
   const handleUserChange = (index: number, value: string) => {
     const users = [...state.newMatch.users];
     users[index] = value;
@@ -110,6 +144,16 @@ export function MatchCreateForm() {
             type="text"
             name="referee"
           />
+          {/*  */}
+          <LiveSearch
+            results={results}
+            value={selectedProfile?.name}
+            renderItem={(item) => <p>{item.name}</p>}
+            onChange={handleChange}
+            onSelect={(item) => setSelectedProfile(item)}
+          />
+          {/*  */}
+
           <div className="text-left text-xl font-bold mt-4">Participants</div>
           {state.newMatch.users.map((user, index) => (
             <div
