@@ -3,7 +3,7 @@ import { Match } from "@/app/types";
 import { DecideMatchWinnerForm } from "@/app/form";
 import { MatchAttestationLogo } from "@/app/page";
 import { Metadata, ResolvingMetadata } from "next";
-import { getFrameMetadata } from '@coinbase/onchainkit';
+import { getFrameMetadata } from "@coinbase/onchainkit";
 
 async function getMatch(id: string): Promise<Match> {
   let nullMatch: Match = {
@@ -45,10 +45,10 @@ export async function generateMetadata(
     buttons: [{ action: "post", label: "Attest match" }],
     image: {
       src: `${process.env["HOST"]}/api/image?id=${id}`,
-      aspectRatio: "1:1"
+      aspectRatio: "1:1",
     },
     input: {
-      text: "Comma separated list of winners"
+      text: "Comma separated list of winners",
     },
     postUrl: `${process.env["HOST"]}/api/attest?id=${id}`,
   });

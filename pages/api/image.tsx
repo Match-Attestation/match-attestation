@@ -64,7 +64,6 @@ export default async function handler(
             padding: "20px 24px",
             borderRadius: "10px",
             color: "black",
-            width: "fit-content",
             maxWidth: "90%",
           }}
         >
