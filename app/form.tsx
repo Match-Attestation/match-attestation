@@ -9,29 +9,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 type MatchState = {
   newMatch: Match;
-  updatedMatch?: Match;
   pending: boolean;
   voted?: boolean;
 };
 
 export function MatchCreateForm() {
-  let formRef = useRef<HTMLFormElement>(null);
-  let [state, mutate] = useOptimistic(
-    { pending: false },
-    function createReducer(state, newMatch: MatchState) {
-      if (newMatch.newMatch) {
-        return {
-          pending: newMatch.pending,
-        };
-      } else {
-        return {
-          pending: newMatch.pending,
-        };
-      }
-    }
-  );
+  const formRef = useRef<HTMLFormElement>(null);
 
-  let matchStub = {
+  const initialMatch: Match = {
     id: uuidv4(),
     created_at: new Date().getTime(),
     title: "",
@@ -39,105 +24,126 @@ export function MatchCreateForm() {
     winner: "",
     referee: "",
   };
-  let saveWithNewMatch = saveMatch.bind(null, matchStub);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let [isPending, startTransition] = useTransition();
+
+  const [state, setState] = useState<MatchState>({
+    newMatch: initialMatch,
+    pending: false,
+  });
+
+  const handleUserChange = (index: number, value: string) => {
+    const users = [...state.newMatch.users];
+    users[index] = value;
+    setState((prevState) => ({
+      ...prevState,
+      newMatch: {
+        ...prevState.newMatch,
+        users,
+      },
+    }));
+  };
+
+  const handleAddUser = () => {
+    setState((prevState) => ({
+      ...prevState,
+      newMatch: {
+        ...prevState.newMatch,
+        users: [...prevState.newMatch.users, ""],
+      },
+    }));
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const formData = new FormData(formRef.current as HTMLFormElement);
+    const newMatch: Match = {
+      ...state.newMatch,
+      title: formData.get("title") as string,
+      referee: formData.get("referee") as string,
+    };
+    setState({
+      newMatch,
+      pending: true,
+    });
+
+    await saveMatch(newMatch);
+  };
 
   return (
     <>
       <div className="mx-8 w-full">
         <form
-          className="relative my-8"
+          className="relative mt-8 mb-6"
           ref={formRef}
-          action={saveWithNewMatch}
-          onSubmit={(event) => {
-            event.preventDefault();
-            let formData = new FormData(event.currentTarget);
-            let newMatch = {
-              ...matchStub,
-              title: formData.get("title") as string,
-              users: formData.getAll("users") as string[],
-              referee: formData.get("referee") as string,
-            };
-
-            formRef.current?.reset();
-            startTransition(async () => {
-              mutate({
-                newMatch,
-                pending: true,
-              });
-
-              await saveMatch(newMatch);
-            });
-          }}
+          onSubmit={handleSubmit}
         >
+          <div className="text-left text-xl font-bold">Title</div>
           <input
             aria-label="Match Title"
             className="pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
             maxLength={150}
-            placeholder="Title..."
+            placeholder="Describe your match..."
             required
             type="text"
             name="title"
           />
+
+          <div className="text-left text-xl font-bold mt-4">Referee</div>
           <input
             aria-label="Match Referee"
             className="pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
             maxLength={150}
-            placeholder="Referee"
+            placeholder="User who will decide the winner..."
             required
             type="text"
             name="referee"
           />
-          <input
-            aria-label="User 1"
-            className="pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
-            maxLength={150}
-            placeholder="User 1"
-            required
-            type="text"
-            name="users"
-          />
-          <input
-            aria-label="User 2"
-            className="pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
-            maxLength={150}
-            placeholder="User 2"
-            required
-            type="text"
-            name="users"
-          />
-          <input
-            aria-label="User 3"
-            className="pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
-            maxLength={150}
-            placeholder="User 3"
-            type="text"
-            name="users"
-          />
-          <input
-            aria-label="User 4"
-            className="pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
-            maxLength={150}
-            placeholder="User 4"
-            type="text"
-            name="users"
-          />
-          <div className={"pt-2 flex justify-end"}>
+          <div className="text-left text-xl font-bold mt-4">Users</div>
+          {state.newMatch.users.map((user, index) => (
+            <input
+              key={index}
+              value={user}
+              onChange={(e) => handleUserChange(index, e.target.value)}
+              required
+              className="mt-2 pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
+              placeholder={`User ${index + 1}`}
+              aria-label={`User ${index + 1}`}
+              type="text"
+              maxLength={150}
+            />
+          ))}
+          <div className="flex space-x-4 mt-4">
             <button
-              className={clsx(
-                "flex items-center p-1 justify-center px-4 h-10 text-lg border bg-blue-500 text-white rounded-md w-24 focus:outline-none focus:ring focus:ring-blue-300 hover:bg-blue-700 focus:bg-blue-700",
-                state.pending && "bg-gray-700 cursor-not-allowed"
-              )}
+              className={`w-1/2 flex items-center p-1 justify-center px-4 h-10 text-lg border bg-blue-500 text-white rounded-md w-24 focus:outline-none focus:ring focus:ring-blue-300 hover:bg-blue-700 focus:bg-blue-700 ${
+                state.pending ? "bg-gray-700 cursor-not-allowed" : ""
+              }`}
+              type="button"
+              onClick={handleAddUser}
+              disabled={state.pending}
+            >
+              <svg
+                width={24}
+                fill="white"
+                className="mr-2"
+                viewBox="-2 -2 24 24"
+                preserveAspectRatio="xMinYMin"
+              >
+                <path d="M11 11h4a1 1 0 0 0 0-2h-4V5a1 1 0 0 0-2 0v4H5a1 1 0 1 0 0 2h4v4a1 1 0 0 0 2 0v-4zm-1 9C4.477 20 0 15.523 0 10S4.477 0 10 0s10 4.477 10 10-4.477 10-10 10z" />
+              </svg>
+              Add user
+            </button>
+
+            <button
+              className={`w-1/2 flex items-center p-1 justify-center px-4 h-10 text-lg border bg-blue-500 text-white rounded-md w-24 focus:outline-none focus:ring focus:ring-blue-300 hover:bg-blue-700 focus:bg-blue-700 ${
+                state.pending ? "bg-gray-700 cursor-not-allowed" : ""
+              }`}
               type="submit"
               disabled={state.pending}
             >
-              Create
+              Create match
             </button>
           </div>
         </form>
       </div>
-      <div className="w-full"></div>
     </>
   );
 }
