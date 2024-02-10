@@ -168,6 +168,7 @@ export default async function handler(
                   marginTop: 4,
                   whiteSpace: "nowrap",
                   overflow: "hidden",
+                  maxWidth: "100%",
                   textOverflow: "ellipsis",
                 }}
               >
