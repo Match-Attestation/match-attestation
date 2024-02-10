@@ -108,7 +108,10 @@ export default async function Page() {
         <h2 className="text-md sm:text-xl mx-4">
           Create a new Match with up to 20 People / Teams
         </h2>
-        <div className="flex flex-wrap items-center justify-around max-w-2xl my-8 w-full bg-white rounded-md shadow-xl h-full border border-gray-100">
+        <div
+          className="flex flex-wrap items-center justify-around my-8 w-full bg-white rounded-md shadow-xl h-full border border-gray-100"
+          style={{ width: "36rem" }}
+        >
           <MatchCreateForm />
         </div>
       </main>
