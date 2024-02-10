@@ -201,7 +201,7 @@ export function MatchCreateForm() {
 
 export function DecideMatchWinnerForm({ match }: { match: Match }) {
   return (
-    <>
+    <div className="relative mt-6 sm:mt-8 mb-6">
       <div className="text-left text-xl font-bold">Title</div>
       <div className="text-left flex text-md">{match.title}</div>
       <div className="text-left text-xl font-bold mt-4">Referee</div>
@@ -227,6 +227,6 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
           </button>
         </Link>
       </div>
-    </>
+    </div>
   );
 }
