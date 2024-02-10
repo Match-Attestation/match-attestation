@@ -52,7 +52,7 @@ async function getResponse(req: NextRequest) {
         return NextResponse.json({ error: 'Match expired' }, { status: 400 });
     }
 
-    let winnersIds = winners.map((i) => match.users[i]);
+    let winnersIds = winners.map((i) => match?.users[i - 1]);
 
     // Attest to win
     const EASContractAddress = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e"; // Sepolia v0.26
