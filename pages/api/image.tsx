@@ -51,7 +51,11 @@ export default async function handler(
             flexDirection: "column",
           }}
         >
-          <h2 style={{ textAlign: "center" }}>{match.title}</h2>
+          {likeAndRecastRequired && (
+            <h2>Like and recast the match to attest</h2>
+          )}
+          {refereeAttestationSuccess && <h2>Attested successfully</h2>}
+          <h2>{match.title}</h2>
           <div
             style={{
               display: "flex",
