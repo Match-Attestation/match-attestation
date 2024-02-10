@@ -57,7 +57,7 @@ export default async function handler(
             boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
           }}
         >
-          <div style={{ fontSize: 16 }}>Title</div>
+          <div style={{ fontSize: 16 }}>🤯 Title</div>
           <div
             style={{
               fontSize: match.title.length > 80 ? 24 : 32,
@@ -189,6 +189,9 @@ export default async function handler(
             weight: 400,
           },
         ],
+        graphemeImages: {
+          "🤯": "https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f92f.svg",
+        },
       }
     );
 
