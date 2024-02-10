@@ -5,44 +5,46 @@ import { kv } from "@vercel/kv";
 import { ethers } from "ethers";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 
-import { NextRequest, NextResponse } from 'next/server';
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed' });
+    }
 
-async function getResponse(req: NextRequest) {
-    let matchId = req.nextUrl.searchParams.get('id');
+    let matchId = req.query["id"] as string;
     if (!matchId) {
-        return NextResponse.json({ error: 'Missing match ID' }, { status: 400 });
+        return res.status(418).json({ error: 'Missing match ID' });
     }
 
     let match: Match | null = null;
     try {
-        match = await kv.get(matchId);
+        match = await kv.hgetall(`match:${matchId}`);
     } catch (error) {
         console.error(error);
-        return NextResponse.json({ error: 'Match not found' }, { status: 404 });
+        return res.status(500).json({ error: 'Failed to retrieve match' });
     }
 
     if (!match) {
-        return NextResponse.json({ error: 'Match not found' }, { status: 404 });
+        return res.status(499).json({ error: 'Match not found' });
     }
 
-    const body: FrameRequest = await req.json();
+    const body: FrameRequest = req.body;
 
     const { isValid, message } = await getFrameMessage(body, {
         neynarApiKey: process.env.NEYNAR_API_KEY,
     });
 
     if (!isValid) {
-        return NextResponse.json({ error: 'Invalid message' }, { status: 400 });
+        return res.status(406).json({ error: 'Invalid frame message' });
     }
 
     const { input, interactor, liked, recasted } = message;
 
     if (!input) {
-        return NextResponse.json({ error: 'Missing input' }, { status: 400 });
+        return res.status(406).json({ error: 'Invalid input' });
     }
 
     if (!liked || !recasted) {
-        return new NextResponse(
+        return res.json(
             getFrameHtmlResponse({
                 image: `${process.env["HOST"]}/api/image?id=${matchId}&likeAndRecastRequired=true`,
             })
@@ -51,11 +53,11 @@ async function getResponse(req: NextRequest) {
 
     let winners = input.trim().split(',').map((i) => parseInt(i));
     if (winners.length < 1) {
-        return NextResponse.json({ error: 'Invalid winners' }, { status: 400 });
+        return res.status(406).json({ error: 'Invalid input' });
     }
 
     if (match.created_at + MATCH_EXPIRY < Date.now()) {
-        return NextResponse.json({ error: 'Match expired' }, { status: 400 });
+        return res.status(412).json({ error: 'Match expired' });
     }
 
     let winnersIds = winners.map((i) => match?.users[i - 1]);
@@ -63,14 +65,14 @@ async function getResponse(req: NextRequest) {
     if (String(interactor.fid) === match.referee) {
         try {
             await kv.set(matchId, { ...match, winners: winnersIds });
-            return new NextResponse(
+            return res.json(
                 getFrameHtmlResponse({
                     image: `${process.env["HOST"]}/api/image?id=${matchId}&refereeAttestationSuccess=true`,
                 })
             )
         } catch (error) {
             console.error(error);
-            return NextResponse.json({ error: 'Failed to update match' }, { status: 500 });
+            return res.status(500).json({ error: 'Failed to attest' });
         }
     } else {
         // Attest to win
@@ -118,7 +120,7 @@ async function getResponse(req: NextRequest) {
 
         console.log("New attestation UID:", newAttestationUID);
 
-        return new NextResponse(
+        return res.json(
             getFrameHtmlResponse({
                 image: `${process.env["HOST"]}/api/image?id=${matchId}&attestationUID=${newAttestationUID}`,
             })
@@ -126,6 +128,3 @@ async function getResponse(req: NextRequest) {
     }
 }
 
-export async function POST(req: NextRequest) {
-    return getResponse(req);
-}

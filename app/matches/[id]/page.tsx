@@ -3,6 +3,7 @@ import { Match } from "@/app/types";
 import { DecideMatchWinnerForm } from "@/app/form";
 import { MatchAttestationLogo } from "@/app/page";
 import { Metadata, ResolvingMetadata } from "next";
+import { getFrameMetadata } from "@coinbase/onchainkit";
 
 async function getMatch(id: string): Promise<Match> {
   let nullMatch: Match = {
@@ -15,11 +16,7 @@ async function getMatch(id: string): Promise<Match> {
   };
 
   try {
-    console.log(id);
-
     let match: Match | null = await kv.hgetall(`match:${id}`);
-
-    console.log(match);
 
     if (!match) {
       return nullMatch;
@@ -44,13 +41,17 @@ export async function generateMetadata(
   const id = params.id;
   const match = await getMatch(id);
 
-  const fcMetadata: Record<string, string> = {
-    "fc:frame": "vNext",
-    "fc:frame:post_url": `${process.env["HOST"]}/api/attest?id=${id}`,
-    "fc:frame:image": `${process.env["HOST"]}/api/image?id=${id}`,
-    "fc:frame:input:text": "Comma separated list of winners",
-    "fc:frame:button:1": "Attest match",
-  };
+  const fcMetadata = getFrameMetadata({
+    buttons: [{ action: "post", label: "Attest match" }],
+    image: {
+      src: `${process.env["HOST"]}/api/image?id=${id}`,
+      aspectRatio: "1:1",
+    },
+    input: {
+      text: "Comma separated list of winners",
+    },
+    postUrl: `${process.env["HOST"]}/api/attest?id=${id}`,
+  });
 
   return {
     title: match.title,
@@ -80,7 +81,10 @@ export default async function Page({ params }: { params: { id: string } }) {
         <h2 className="text-md sm:text-xl mx-4">
           Create a new Match with up to 20 People / Teams
         </h2>
-        <div className="flex flex-wrap items-center justify-around max-w-4xl my-8 w-full bg-white rounded-md shadow-xl h-full border border-gray-100">
+        <div
+          className="flex flex-wrap items-center justify-around my-8 w-full bg-white rounded-md shadow-xl h-full border border-gray-100"
+          style={{ width: "36rem", maxWidth: "90dvw" }}
+        >
           <DecideMatchWinnerForm match={match} />
         </div>
       </main>

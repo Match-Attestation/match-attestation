@@ -33,12 +33,13 @@ export default async function handler(
     const svg = await satori(
       <div
         style={{
-          justifyContent: "flex-start",
-          alignItems: "center",
           display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
           width: "100%",
           height: "100%",
-          backgroundColor: "f4f4f4",
+          backgroundColor: "#f4f4f4",
           padding: 12,
           lineHeight: 1.2,
           fontSize: 24,
@@ -47,37 +48,76 @@ export default async function handler(
       >
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
+            fontSize: 32,
+            fontWeight: "bold",
+            color: "black",
+            marginBottom: 20,
           }}
         >
-          {likeAndRecastRequired && (
-            <h2>Like and recast the match to attest</h2>
-          )}
-          {refereeAttestationSuccess && <h2>Attested successfully</h2>}
-          <h2>{match.title}</h2>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          ></div>
-          {match.users.map((user, index) => {
-            return (
-              <div style={{ marginTop: 6 }}>{index + 1 + ". " + user}</div>
-            );
-          })}
+          Match Details
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            backgroundColor: "white",
+            padding: "20px 24px",
+            borderRadius: "10px",
+            color: "black",
+            maxWidth: "90%",
+          }}
+        >
+          <div style={{ fontSize: 20, marginBottom: 4, fontWeight: 700 }}>
+            Title
+          </div>
+          <div style={{ fontSize: 24, marginBottom: 12 }}>{match.title}</div>
+
+          <div style={{ fontSize: 20, marginBottom: 4, fontWeight: 700 }}>
+            Referee:
+          </div>
+          <div style={{ fontSize: 24, marginBottom: 12 }}>{match.referee}</div>
+
+          <div style={{ fontSize: 20, marginBottom: 4, fontWeight: 700 }}>
+            Participants:
+          </div>
+          {match.users.map((user, index) => (
+            <div key={index} style={{ fontSize: 24, marginBottom: 12 }}>
+              {index + 1 + ". " + user}
+            </div>
+          ))}
+
+          <div style={{ fontSize: 20, marginBottom: 4, fontWeight: 700 }}>
+            Winners:
+          </div>
+          <div style={{ fontSize: 24, marginBottom: 12 }}>
+            {match.winners.length > 0
+              ? match.winners.join(", ")
+              : "No winners yet..."}
+          </div>
+
+          <div style={{ fontSize: 20, marginBottom: 4, fontWeight: 700 }}>
+            Start Date:
+          </div>
+          <div style={{ fontSize: 24, marginBottom: 12 }}>
+            {new Date(Number(match.created_at)).toLocaleString()}
+          </div>
         </div>
       </div>,
       {
         width: 600,
-        height: 400,
+        height: 600,
         fonts: [
           {
             data: fontData,
-            name: "Roboto",
+            name: "Arial",
             style: "normal",
             weight: 400,
+          },
+          {
+            data: fontData,
+            name: "Arial",
+            style: "normal",
+            weight: 700,
           },
         ],
       }
