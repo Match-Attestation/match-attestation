@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import sharp from "sharp";
-import { Match } from "@/app/types";
+import { MATCH_EXPIRY, Match } from "@/app/types";
 import { kv } from "@vercel/kv";
 import satori from "satori";
 import { join } from "path";
@@ -58,7 +58,7 @@ export default async function handler(
           }}
         >
           <div style={{ fontSize: 16 }}>Title</div>
-          <div style={{ fontSize: 32, marginTop: 4 }}>{match.title}</div>
+          <div style={{ fontSize: 32, marginTop: 2 }}>{match.title}</div>
         </div>
         <div
           style={{
@@ -110,8 +110,15 @@ export default async function handler(
               <div style={{ fontSize: 24, marginTop: 4 }}>{match.referee}</div>
 
               <div style={{ fontSize: 16, marginTop: 12 }}>Start Date</div>
-              <div style={{ fontSize: 24, marginTop: 4 }}>
+              <div style={{ fontSize: 20, marginTop: 4 }}>
                 {new Date(Number(match.created_at)).toLocaleString()}
+              </div>
+
+              <div style={{ fontSize: 16, marginTop: 12 }}>End Date</div>
+              <div style={{ fontSize: 20, marginTop: 4 }}>
+                {new Date(
+                  Number(match.created_at + MATCH_EXPIRY)
+                ).toLocaleString()}
               </div>
             </div>
           </div>
