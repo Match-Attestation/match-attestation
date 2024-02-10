@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(499).json({ error: 'Match not found' });
     }
 
-    const body: FrameRequest = await req.body.json();
+    const body: FrameRequest = req.body;
 
     const { isValid, message } = await getFrameMessage(body, {
         neynarApiKey: process.env.NEYNAR_API_KEY,
