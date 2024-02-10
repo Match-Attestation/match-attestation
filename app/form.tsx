@@ -2,11 +2,9 @@
 
 import clsx from "clsx";
 import { useOptimistic, useRef, useState, useTransition } from "react";
-import { redirectToMatches, saveMatch, attestMatch } from "./actions";
+import { saveMatch } from "./actions";
 import { v4 as uuidv4 } from "uuid";
 import { Match } from "./types";
-import { useRouter, useSearchParams } from "next/navigation";
-import { stat } from "fs";
 
 type MatchState = {
   newMatch: Match;
@@ -205,7 +203,7 @@ function MatchResults({ match }: { match: Match }) {
   return (
     <div className="mb-4">
       <img
-        src={`/api/image?id=${match.id}&results=true&date=${Date.now()}`}
+        src={`/api/image?id=${match.id}&date=${Date.now()}`}
         alt="Match results"
       />
     </div>
