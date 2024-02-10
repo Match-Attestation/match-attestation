@@ -201,7 +201,7 @@ export function MatchCreateForm() {
 
 export function DecideMatchWinnerForm({ match }: { match: Match }) {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg p-4 m-4">
+    <div className="relative mt-6 sm:mt-8 mb-6">
       <div className="text-left text-xl font-bold">Title</div>
       <div className="text-left flex text-md">{match.title}</div>
       <div className="text-left text-xl font-bold mt-4">Referee</div>
@@ -220,7 +220,7 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
       <div className="actions mt-4">
         <Link href="/">
           <button
-            className={`w-full sm:w-1/2 mt-2 sm:mt-0 flex items-center p-1 justify-center px-4 text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700`}
+            className={`w-full mt-2 sm:mt-0 flex items-center p-1 justify-center px-4 text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700`}
             style={{ height: "2.875rem" }}
           >
             Create new match
