@@ -28,7 +28,7 @@ export function MatchCreateForm() {
   const [state, setState] = useState<MatchState>({
     newMatch: initialMatch,
     pending: false,
-    maxUsersCount: 20,
+    maxUsersCount: 16,
   });
 
   const handleUserChange = (index: number, value: string) => {

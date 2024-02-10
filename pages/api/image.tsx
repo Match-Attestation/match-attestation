@@ -160,7 +160,9 @@ export default async function handler(
                   fontSize:
                     match && match.users.length > 10
                       ? match.users.length > 12
-                        ? 18
+                        ? match.users.length > 14
+                          ? 16
+                          : 18
                         : 20
                       : 24,
                   marginTop: 4,
