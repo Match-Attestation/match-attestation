@@ -6,10 +6,12 @@ import { redirectToMatches, saveMatch, attestMatch } from "./actions";
 import { v4 as uuidv4 } from "uuid";
 import { Match } from "./types";
 import { useRouter, useSearchParams } from "next/navigation";
+import { stat } from "fs";
 
 type MatchState = {
   newMatch: Match;
   pending: boolean;
+  maxUsersCount: number;
   voted?: boolean;
 };
 
@@ -28,6 +30,7 @@ export function MatchCreateForm() {
   const [state, setState] = useState<MatchState>({
     newMatch: initialMatch,
     pending: false,
+    maxUsersCount: 20,
   });
 
   const handleUserChange = (index: number, value: string) => {
@@ -75,6 +78,7 @@ export function MatchCreateForm() {
     setState({
       newMatch,
       pending: true,
+      maxUsersCount: state.maxUsersCount,
     });
 
     await saveMatch(newMatch);
@@ -84,14 +88,14 @@ export function MatchCreateForm() {
     <>
       <div className="mx-4 sm:mx-8 w-full">
         <form
-          className="relative mt-8 mb-6"
+          className="relative mt-6 sm:mt-8 mb-6"
           ref={formRef}
           onSubmit={handleSubmit}
         >
           <div className="text-left text-xl font-bold">Title</div>
           <input
             aria-label="Match Title"
-            className="px-3 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
+            className="px-3 py-2 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
             maxLength={150}
             placeholder="Describe your match..."
             required
@@ -102,7 +106,7 @@ export function MatchCreateForm() {
           <div className="text-left text-xl font-bold mt-4">Referee</div>
           <input
             aria-label="Match Referee"
-            className="px-3 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
+            className="px-3 py-2 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
             maxLength={150}
             placeholder="User who will decide the winner..."
             required
@@ -112,7 +116,7 @@ export function MatchCreateForm() {
           <div className="text-left text-xl font-bold mt-4">Participants</div>
           {state.newMatch.users.map((user, index) => (
             <div
-              className={`flex items-center space-x-4 ${
+              className={`flex items-center space-x-2 ${
                 index == 0 ? "mt-1" : "mt-2"
               }`}
             >
@@ -121,7 +125,7 @@ export function MatchCreateForm() {
                 value={user}
                 onChange={(e) => handleUserChange(index, e.target.value)}
                 required
-                className="flex px-3 py-3 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
+                className="flex px-3 py-2 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
                 placeholder={`Participant №${index + 1}`}
                 aria-label={`Participant №${index + 1}`}
                 type="text"
@@ -129,15 +133,17 @@ export function MatchCreateForm() {
               />
               {state.newMatch.users.length > 2 && (
                 <button
-                  className={`flex items-center justify-center text-lg border bg-blue-500 text-white rounded-md focus:outline-none focus:ring focus:ring-blue-300 hover:bg-blue-700 focus:bg-blue-700 ${
-                    state.pending ? "bg-gray-700 cursor-not-allowed" : ""
+                  className={`flex items-center justify-center text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700 ${
+                    state.pending
+                      ? "bg-gray-500 hover:bg-gray-600 cursor-not-allowed"
+                      : ""
                   }`}
-                  style={{ minWidth: "2.5rem", height: "2.5rem" }}
+                  style={{ minWidth: "2.875rem", height: "2.875rem" }}
                   type="button"
                   onClick={() => handleDeleteUser(index)}
                 >
                   <svg
-                    width={"1.5rem"}
+                    width={"1.875rem"}
                     fill="white"
                     viewBox="-2 -2 24 24"
                     style={{ rotate: "45deg" }}
@@ -149,17 +155,24 @@ export function MatchCreateForm() {
               )}
             </div>
           ))}
-          <div className="flex flex-col sm:flex-row sm:space-x-4 mt-4">
+          <div className="flex flex-col sm:flex-row sm:space-x-2 mt-4">
             <button
-              className={`w-full sm:w-1/2 flex items-center p-1 justify-center px-4 h-10 text-lg border bg-blue-500 text-white rounded-md  focus:outline-none focus:ring focus:ring-blue-300 hover:bg-blue-700 focus:bg-blue-700 ${
-                state.pending ? "bg-gray-700 cursor-not-allowed" : ""
+              className={`w-full sm:w-1/2 flex items-center p-1 justify-center px-4 text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700 ${
+                state.pending ||
+                state.newMatch.users.length >= state.maxUsersCount
+                  ? "bg-gray-500 hover:bg-gray-600 cursor-not-allowed"
+                  : ""
               }`}
+              style={{ height: "2.875rem" }}
               type="button"
               onClick={handleAddUser}
-              disabled={state.pending}
+              disabled={
+                state.pending ||
+                state.newMatch.users.length >= state.maxUsersCount
+              }
             >
               <svg
-                width={24}
+                width={"1.875rem"}
                 fill="white"
                 className="mr-2"
                 viewBox="-2 -2 24 24"
@@ -170,9 +183,12 @@ export function MatchCreateForm() {
               Add user
             </button>
             <button
-              className={`w-full sm:w-1/2 mt-2 sm:mt-0 flex items-center p-1 justify-center px-4 h-10 text-lg border bg-blue-500 text-white rounded-md focus:outline-none focus:ring focus:ring-blue-300 hover:bg-blue-700 focus:bg-blue-700 ${
-                state.pending ? "bg-gray-700 cursor-not-allowed" : ""
+              className={`w-full sm:w-1/2 mt-2 sm:mt-0 flex items-center p-1 justify-center px-4 text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700 ${
+                state.pending
+                  ? "bg-gray-500 hover:bg-gray-600 cursor-not-allowed"
+                  : ""
               }`}
+              style={{ height: "2.875rem" }}
               type="submit"
               disabled={state.pending}
             >
