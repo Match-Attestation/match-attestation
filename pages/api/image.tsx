@@ -67,37 +67,27 @@ export default async function handler(
             maxWidth: "90%",
           }}
         >
-          <div style={{ fontSize: 20, marginBottom: 4, fontWeight: 700 }}>
-            Title
-          </div>
+          <div style={{ fontSize: 20, marginBottom: 4 }}>Title</div>
           <div style={{ fontSize: 24, marginBottom: 12 }}>{match.title}</div>
 
-          <div style={{ fontSize: 20, marginBottom: 4, fontWeight: 700 }}>
-            Referee:
-          </div>
+          <div style={{ fontSize: 20, marginBottom: 4 }}>Referee:</div>
           <div style={{ fontSize: 24, marginBottom: 12 }}>{match.referee}</div>
 
-          <div style={{ fontSize: 20, marginBottom: 4, fontWeight: 700 }}>
-            Participants:
-          </div>
+          <div style={{ fontSize: 20, marginBottom: 4 }}>Participants:</div>
           {match.users.map((user, index) => (
             <div key={index} style={{ fontSize: 24, marginBottom: 12 }}>
               {index + 1 + ". " + user}
             </div>
           ))}
 
-          <div style={{ fontSize: 20, marginBottom: 4, fontWeight: 700 }}>
-            Winners:
-          </div>
+          <div style={{ fontSize: 20, marginBottom: 4 }}>Winners:</div>
           <div style={{ fontSize: 24, marginBottom: 12 }}>
             {match.winners.length > 0
               ? match.winners.join(", ")
               : "No winners yet..."}
           </div>
 
-          <div style={{ fontSize: 20, marginBottom: 4, fontWeight: 700 }}>
-            Start Date:
-          </div>
+          <div style={{ fontSize: 20, marginBottom: 4 }}>Start Date:</div>
           <div style={{ fontSize: 24, marginBottom: 12 }}>
             {new Date(Number(match.created_at)).toLocaleString()}
           </div>
