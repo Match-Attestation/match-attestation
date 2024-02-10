@@ -46,12 +46,11 @@ export async function generateMetadata(
 
   const fcMetadata: Record<string, string> = {
     "fc:frame": "vNext",
-    "fc:frame:post_url": `${process.env["HOST"]}/api/vote?id=${id}`,
+    "fc:frame:post_url": `${process.env["HOST"]}/api/attest?id=${id}`,
     "fc:frame:image": `${process.env["HOST"]}/api/image?id=${id}`,
+    "fc:frame:input:text": "Comma separated list of winners",
+    "fc:frame:button:1": "Attest",
   };
-  match.users.map((option, index) => {
-    fcMetadata[`fc:frame:button:${index + 1}`] = option;
-  });
 
   return {
     title: match.title,
