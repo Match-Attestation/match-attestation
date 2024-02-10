@@ -6,10 +6,12 @@ import { redirectToMatches, saveMatch, attestMatch } from "./actions";
 import { v4 as uuidv4 } from "uuid";
 import { Match } from "./types";
 import { useRouter, useSearchParams } from "next/navigation";
+import { stat } from "fs";
 
 type MatchState = {
   newMatch: Match;
   pending: boolean;
+  maxUsersCount: number;
   voted?: boolean;
 };
 
@@ -28,6 +30,7 @@ export function MatchCreateForm() {
   const [state, setState] = useState<MatchState>({
     newMatch: initialMatch,
     pending: false,
+    maxUsersCount: 20,
   });
 
   const handleUserChange = (index: number, value: string) => {
@@ -75,6 +78,7 @@ export function MatchCreateForm() {
     setState({
       newMatch,
       pending: true,
+      maxUsersCount: state.maxUsersCount,
     });
 
     await saveMatch(newMatch);
@@ -130,7 +134,9 @@ export function MatchCreateForm() {
               {state.newMatch.users.length > 2 && (
                 <button
                   className={`flex items-center justify-center text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700 ${
-                    state.pending ? "bg-gray-700 cursor-not-allowed" : ""
+                    state.pending
+                      ? "bg-gray-500 hover:bg-gray-600 cursor-not-allowed"
+                      : ""
                   }`}
                   style={{ minWidth: "2.875rem", height: "2.875rem" }}
                   type="button"
@@ -151,13 +157,19 @@ export function MatchCreateForm() {
           ))}
           <div className="flex flex-col sm:flex-row sm:space-x-2 mt-4">
             <button
-              className={`w-full sm:w-1/2 flex items-center p-1 justify-center px-4 text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700${
-                state.pending ? "bg-gray-700 cursor-not-allowed" : ""
+              className={`w-full sm:w-1/2 flex items-center p-1 justify-center px-4 text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700 ${
+                state.pending ||
+                state.newMatch.users.length >= state.maxUsersCount
+                  ? "bg-gray-500 hover:bg-gray-600 cursor-not-allowed"
+                  : ""
               }`}
               style={{ height: "2.875rem" }}
               type="button"
               onClick={handleAddUser}
-              disabled={state.pending}
+              disabled={
+                state.pending ||
+                state.newMatch.users.length >= state.maxUsersCount
+              }
             >
               <svg
                 width={"1.875rem"}
@@ -172,7 +184,9 @@ export function MatchCreateForm() {
             </button>
             <button
               className={`w-full sm:w-1/2 mt-2 sm:mt-0 flex items-center p-1 justify-center px-4 text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700 ${
-                state.pending ? "bg-gray-700 cursor-not-allowed" : ""
+                state.pending
+                  ? "bg-gray-500 hover:bg-gray-600 cursor-not-allowed"
+                  : ""
               }`}
               style={{ height: "2.875rem" }}
               type="submit"
