@@ -26,7 +26,9 @@ export default async function handler(
       return res.status(400).send("Missing match ID");
     }
 
-    const showResults = req.query["results"] === "true";
+    const attestationUID = req.query["attestationUID"];
+    const likeAndRecastRequired = req.query["likeAndRecastRequired"];
+    const refereeAttestationSuccess = req.query["refereeAttestationSuccess"];
 
     const svg = await satori(
       <div
