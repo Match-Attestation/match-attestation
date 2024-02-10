@@ -49,7 +49,7 @@ export async function generateMetadata(
     "fc:frame:post_url": `${process.env["HOST"]}/api/attest?id=${id}`,
     "fc:frame:image": `${process.env["HOST"]}/api/image?id=${id}`,
     "fc:frame:input:text": "Comma separated list of winners",
-    "fc:frame:button:1": "Attest",
+    "fc:frame:button:1": "Attest match",
   };
 
   return {
