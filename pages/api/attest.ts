@@ -7,8 +7,9 @@ import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 
 import { NextRequest, NextResponse } from 'next/server';
 
-async function getResponse(req: NextRequest) {
-    let matchId = req.nextUrl.searchParams.get('id');
+export default async function handler( req: NextApiRequest,
+    res: NextApiResponse) {
+    let matchId = req.query["id"] as string;
     if (!matchId) {
         return NextResponse.json({ error: 'Missing match ID' }, { status: 400 });
     }
@@ -25,7 +26,7 @@ async function getResponse(req: NextRequest) {
         return NextResponse.json({ error: 'Match not found' }, { status: 404 });
     }
 
-    const body: FrameRequest = await req.json();
+    const body: FrameRequest = await req.body.json();
 
     const { isValid, message } = await getFrameMessage(body, {
         neynarApiKey: process.env.NEYNAR_API_KEY,
@@ -126,6 +127,6 @@ async function getResponse(req: NextRequest) {
     }
 }
 
-export async function POST(req: NextRequest) {
-    return getResponse(req);
-}
+// export async function POST(req: NextRequest) {
+//     return getResponse(req);
+// }
