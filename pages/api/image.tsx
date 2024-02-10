@@ -49,7 +49,7 @@ export default async function handler(
           style={{
             display: "flex",
             flexDirection: "column",
-            borderRadius: 24,
+            borderRadius: 20,
             marginBottom: 20,
             backgroundColor: "white",
             padding: "12px 24px",
@@ -78,7 +78,7 @@ export default async function handler(
                 display: "flex",
                 flexDirection: "column",
                 fontSize: 24,
-                borderRadius: 24,
+                borderRadius: 20,
                 marginBottom: 20,
                 backgroundColor: "white",
                 padding: "12px 24px",
@@ -98,7 +98,7 @@ export default async function handler(
                 display: "flex",
                 flexDirection: "column",
                 fontSize: 24,
-                borderRadius: 24,
+                borderRadius: 20,
                 marginBottom: 20,
                 backgroundColor: "white",
                 padding: "12px 24px",
@@ -108,8 +108,21 @@ export default async function handler(
             >
               <div style={{ fontSize: 16 }}>Referee</div>
               <div style={{ fontSize: 24, marginTop: 4 }}>{match.referee}</div>
-
-              <div style={{ fontSize: 16, marginTop: 12 }}>Start Date</div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                fontSize: 24,
+                borderRadius: 20,
+                marginBottom: 20,
+                backgroundColor: "white",
+                padding: "12px 24px",
+                width: "100%",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <div style={{ fontSize: 16 }}>Start Date</div>
               <div style={{ fontSize: 20, marginTop: 4 }}>
                 {new Date(Number(match.created_at)).toLocaleString()}
               </div>
@@ -117,7 +130,7 @@ export default async function handler(
               <div style={{ fontSize: 16, marginTop: 12 }}>End Date</div>
               <div style={{ fontSize: 20, marginTop: 4 }}>
                 {new Date(
-                  Number(match.created_at + MATCH_EXPIRY)
+                  Number(match.created_at) + MATCH_EXPIRY
                 ).toLocaleString()}
               </div>
             </div>
@@ -128,7 +141,7 @@ export default async function handler(
               display: "flex",
               flexDirection: "column",
               fontSize: 24,
-              borderRadius: 24,
+              borderRadius: 20,
               marginBottom: 20,
               backgroundColor: "white",
               padding: "12px 24px",
