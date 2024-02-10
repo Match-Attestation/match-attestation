@@ -23,13 +23,13 @@ export function MatchCreateForm() {
     users: ["", ""],
     winner: "",
     referee: "",
-  };
+  } as Match;
 
   let [state, mutate] = useOptimistic(
     { pending: false, newMatch: matchStub },
-    function createReducer(state, newMatch: MatchState) {
+    function createReducer(state, match: MatchState) {
       return {
-        ...newMatch,
+        ...match,
       };
     }
   );
@@ -47,11 +47,8 @@ export function MatchCreateForm() {
             event.preventDefault();
             let formData = new FormData(event.currentTarget);
             let newMatch = {
-              ...matchStub,
+              ...state.newMatch,
               title: formData.get("title") as string,
-              users: formData
-                .getAll("users")
-                .filter((user) => user !== "") as string[],
               referee: formData.get("referee") as string,
             };
 
@@ -89,40 +86,20 @@ export function MatchCreateForm() {
           />
 
           <div className="text-left text-xl font-bold mt-4">Users</div>
-          <input
-            aria-label="User 1"
-            className="pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
-            maxLength={150}
-            placeholder="User 1"
-            required
-            type="text"
-            name="users"
-          />
-          <input
-            aria-label="User 2"
-            className="pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
-            maxLength={150}
-            placeholder="User 2"
-            required
-            type="text"
-            name="users"
-          />
-          <input
-            aria-label="User 3"
-            className="pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
-            maxLength={150}
-            placeholder="User 3"
-            type="text"
-            name="users"
-          />
-          <input
-            aria-label="User 4"
-            className="pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
-            maxLength={150}
-            placeholder="User 4"
-            type="text"
-            name="users"
-          />
+          {state.newMatch.users.map((user, index) => (
+            <input
+              key={index} // Use index as key
+              value={user} // Set input value from newMatch.users state
+              onChange={(event) => updateUser(index, event.target.value)} // Update user when input changes
+              aria-label={`User ${index + 1}`}
+              className="pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
+              maxLength={150}
+              placeholder={`User ${index + 1}`}
+              required
+              type="text"
+              name="users"
+            />
+          ))}
           <div className={"pt-4 flex justify-end"}>
             <button
               className={clsx(
