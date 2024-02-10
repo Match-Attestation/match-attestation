@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { useOptimistic, useRef, useState, useTransition } from "react";
 import { saveMatch } from "./actions";
 import { v4 as uuidv4 } from "uuid";
-import { Match } from "./types";
+import { MATCH_EXPIRY, Match } from "./types";
 import Link from "next/link";
 
 type MatchState = {
@@ -221,9 +221,9 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
             ? match.winners.join(", ")
             : "No winners yet..."}
         </div>
-        <div className="text-left text-xl font-bold mt-4">⏱️ Start date</div>
+        <div className="text-left text-xl font-bold mt-4">⏱️ Expires</div>
         <div className="text-left flex text-md">
-          {new Date(Number(match.created_at)).toLocaleString()}
+          {new Date(Number(match.created_at) + MATCH_EXPIRY).toLocaleString()}
         </div>
         <img className="mt-4 w-full" src={`/api/image?id=${match.id}`} />
         <div className="actions mt-4">
