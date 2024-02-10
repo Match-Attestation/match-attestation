@@ -64,30 +64,42 @@ export default async function handler(
             padding: "20px",
             borderRadius: "10px",
             color: "black",
+            width: "fit-content",
+            maxWidth: "90%",
           }}
         >
-          <div style={{ fontSize: 24, marginBottom: 10 }}>Title:</div>
-          <div style={{ fontSize: 20, marginBottom: 5 }}>{match.title}</div>
+          <div style={{ fontSize: 20, marginBottom: 4, fontWeight: 700 }}>
+            Title
+          </div>
+          <div style={{ fontSize: 24, marginBottom: 12 }}>{match.title}</div>
 
-          <div style={{ fontSize: 24, marginBottom: 10 }}>Referee:</div>
-          <div style={{ fontSize: 20, marginBottom: 5 }}>{match.referee}</div>
+          <div style={{ fontSize: 20, marginBottom: 4, fontWeight: 700 }}>
+            Referee:
+          </div>
+          <div style={{ fontSize: 24, marginBottom: 12 }}>{match.referee}</div>
 
-          <div style={{ fontSize: 24, marginBottom: 10 }}>Participants:</div>
+          <div style={{ fontSize: 20, marginBottom: 4, fontWeight: 700 }}>
+            Participants:
+          </div>
           {match.users.map((user, index) => (
-            <div key={index} style={{ fontSize: 20, marginBottom: 5 }}>
+            <div key={index} style={{ fontSize: 24, marginBottom: 12 }}>
               {index + 1 + ". " + user}
             </div>
           ))}
 
-          <div style={{ fontSize: 24, marginBottom: 10 }}>Winners:</div>
-          <div style={{ fontSize: 20, marginBottom: 5 }}>
+          <div style={{ fontSize: 20, marginBottom: 4, fontWeight: 700 }}>
+            Winners:
+          </div>
+          <div style={{ fontSize: 24, marginBottom: 12 }}>
             {match.winners.length > 0
               ? match.winners.join(", ")
               : "No winners yet..."}
           </div>
 
-          <div style={{ fontSize: 24, marginBottom: 10 }}>Start Date:</div>
-          <div style={{ fontSize: 20, marginBottom: 5 }}>
+          <div style={{ fontSize: 20, marginBottom: 4, fontWeight: 700 }}>
+            Start Date:
+          </div>
+          <div style={{ fontSize: 24, marginBottom: 12 }}>
             {new Date(Number(match.created_at)).toLocaleString()}
           </div>
         </div>
