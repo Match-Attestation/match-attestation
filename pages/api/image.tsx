@@ -46,7 +46,16 @@ export default async function handler(
           color: "lightgray",
         }}
       >
-        <h1 style={{ color: "black", fontSize: 32 }}>Match Details</h1>
+        <div
+          style={{
+            fontSize: 32,
+            fontWeight: "bold",
+            color: "black",
+            marginBottom: 20,
+          }}
+        >
+          Match Details
+        </div>
         <div
           style={{
             display: "flex",
@@ -57,20 +66,30 @@ export default async function handler(
             color: "black",
           }}
         >
-          <h2>Title: {match.title}</h2>
-          <h2>Referee: {match.referee}</h2>
-          <h2>Participants:</h2>
+          <div style={{ fontSize: 24, marginBottom: 10 }}>Title:</div>
+          <div style={{ fontSize: 20, marginBottom: 5 }}>{match.title}</div>
+
+          <div style={{ fontSize: 24, marginBottom: 10 }}>Referee:</div>
+          <div style={{ fontSize: 20, marginBottom: 5 }}>{match.referee}</div>
+
+          <div style={{ fontSize: 24, marginBottom: 10 }}>Participants:</div>
           {match.users.map((user, index) => (
-            <p key={index}>{index + 1 + ". " + user}</p>
+            <div key={index} style={{ fontSize: 20, marginBottom: 5 }}>
+              {index + 1 + ". " + user}
+            </div>
           ))}
-          <h2>Winners:</h2>
-          <p>
+
+          <div style={{ fontSize: 24, marginBottom: 10 }}>Winners:</div>
+          <div style={{ fontSize: 20, marginBottom: 5 }}>
             {match.winners.length > 0
               ? match.winners.join(", ")
               : "No winners yet..."}
-          </p>
-          <h2>Start Date:</h2>
-          <p>{new Date(Number(match.created_at)).toLocaleString()}</p>
+          </div>
+
+          <div style={{ fontSize: 24, marginBottom: 10 }}>Start Date:</div>
+          <div style={{ fontSize: 20, marginBottom: 5 }}>
+            {new Date(Number(match.created_at)).toLocaleString()}
+          </div>
         </div>
       </div>,
       {
