@@ -37,23 +37,29 @@ export default async function handler(
           width: "100%",
           height: "100%",
           backgroundColor: "f4f4f4",
-          padding: 50,
+          padding: 12,
           lineHeight: 1.2,
           fontSize: 24,
+          color: "lightgray",
         }}
       >
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            padding: 20,
           }}
         >
-          <h2 style={{ textAlign: "center", color: "lightgray" }}>
-            {match.title}
-          </h2>
+          <h2 style={{ textAlign: "center" }}>{match.title}</h2>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          ></div>
           {match.users.map((user, index) => {
-            return <div>{user}</div>;
+            return (
+              <div style={{ marginTop: 6 }}>{index + 1 + ". " + user}</div>
+            );
           })}
         </div>
       </div>,
