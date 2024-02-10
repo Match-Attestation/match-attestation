@@ -130,10 +130,10 @@ export default async function handler(
               }}
             >
               <div style={{ fontSize: 16 }}>Expires</div>
-              <div style={{ fontSize: 18, marginTop: 4 }}>
+              <div style={{ fontSize: 20, marginTop: 4 }}>
                 {new Date(Number(match.created_at) + MATCH_EXPIRY)
                   .toUTCString()
-                  .slice(5, 22) + " (UTC)"}
+                  .slice(5, 22) + " UTC"}
               </div>
             </div>
           </div>

@@ -225,7 +225,7 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
         <div className="text-left flex text-md">
           {new Date(Number(match.created_at) + MATCH_EXPIRY)
             .toUTCString()
-            .slice(5, 22) + " (UTC)"}
+            .slice(5, 22) + " UTC"}
         </div>
         <img className="mt-4 w-full" src={`/api/image?id=${match.id}`} />
         <div className="actions mt-4">
