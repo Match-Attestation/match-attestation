@@ -61,7 +61,7 @@ export default async function handler(
             display: "flex",
             flexDirection: "column",
             backgroundColor: "white",
-            padding: "20px",
+            padding: "20px 24px",
             borderRadius: "10px",
             color: "black",
             width: "fit-content",
