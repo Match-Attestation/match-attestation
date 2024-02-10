@@ -126,7 +126,3 @@ export default async function handler( req: NextApiRequest,
         )
     }
 }
-
-// export async function POST(req: NextRequest) {
-//     return getResponse(req);
-// }
