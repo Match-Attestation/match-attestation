@@ -5,6 +5,7 @@ import { useOptimistic, useRef, useState, useTransition } from "react";
 import { saveMatch } from "./actions";
 import { v4 as uuidv4 } from "uuid";
 import { Match } from "./types";
+import Link from "next/link";
 
 type MatchState = {
   newMatch: Match;
@@ -202,11 +203,11 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg p-4 m-4">
       <div className="text-left text-xl font-bold">Title</div>
-      <div>{match.title}</div>
+      <div className="text-left flex text-md">{match.title}</div>
       <div className="text-left text-xl font-bold mt-4">Referee</div>
-      <div>{match.referee}</div>
+      <div className="text-left flex text-md">{match.referee}</div>
       <div className="text-left text-xl font-bold mt-4">Participants</div>
-      <div className="flex flex-col">
+      <div className="text-left flex flex-col text-md">
         {match.users.map((user, index) => (
           <div key={index}>{index + 1 + ". " + user}</div>
         ))}
@@ -216,6 +217,16 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
         src={`/api/image?id=${match.id}`}
         alt="Match results"
       />
+      <div className="actions mt-4">
+        <Link href="/">
+          <button
+            className={`w-full sm:w-1/2 mt-2 sm:mt-0 flex items-center p-1 justify-center px-4 text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700`}
+            style={{ height: "2.875rem" }}
+          >
+            Create new match
+          </button>
+        </Link>
+      </div>
     </div>
   );
 }
