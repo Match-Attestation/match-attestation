@@ -201,31 +201,33 @@ export function MatchCreateForm() {
 
 export function DecideMatchWinnerForm({ match }: { match: Match }) {
   return (
-    <div className="relative mt-6 sm:mt-8 mb-6">
-      <div className="text-left text-xl font-bold">Title</div>
-      <div className="text-left flex text-md">{match.title}</div>
-      <div className="text-left text-xl font-bold mt-4">Referee</div>
-      <div className="text-left flex text-md">{match.referee}</div>
-      <div className="text-left text-xl font-bold mt-4">Participants</div>
-      <div className="text-left flex flex-col text-md">
-        {match.users.map((user, index) => (
-          <div key={index}>{index + 1 + ". " + user}</div>
-        ))}
-      </div>
-      <img
-        className="mt-4 w-full"
-        src={`/api/image?id=${match.id}`}
-        alt="Match results"
-      />
-      <div className="actions mt-4">
-        <Link href="/">
-          <button
-            className={`w-full mt-2 sm:mt-0 flex items-center p-1 justify-center px-4 text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700`}
-            style={{ height: "2.875rem" }}
-          >
-            Create new match
-          </button>
-        </Link>
+    <div className="mx-4 sm:mx-8 w-full">
+      <div className="relative mt-6 sm:mt-8 mb-6">
+        <div className="text-left text-xl font-bold">Title</div>
+        <div className="text-left flex text-md">{match.title}</div>
+        <div className="text-left text-xl font-bold mt-4">Referee</div>
+        <div className="text-left flex text-md">{match.referee}</div>
+        <div className="text-left text-xl font-bold mt-4">Participants</div>
+        <div className="text-left flex flex-col text-md">
+          {match.users.map((user, index) => (
+            <div key={index}>{index + 1 + ". " + user}</div>
+          ))}
+        </div>
+        <img
+          className="mt-4 w-full"
+          src={`/api/image?id=${match.id}`}
+          alt="Match results"
+        />
+        <div className="actions mt-4">
+          <Link href="/">
+            <button
+              className={`w-full mt-2 sm:mt-0 flex items-center p-1 justify-center px-4 text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700`}
+              style={{ height: "2.875rem" }}
+            >
+              Create new match
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
