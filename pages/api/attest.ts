@@ -99,6 +99,10 @@ async function getResponse(req: NextRequest) {
 
     console.log("New attestation UID:", newAttestationUID);
 
+    if (String(interactor.fid) === match.referee) {
+        await kv.set(matchId, { ...match, winners: winnersIds });
+    }
+
     return new NextResponse(
         getFrameHtmlResponse({
             // FIXME: actual image url
