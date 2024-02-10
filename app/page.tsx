@@ -5,7 +5,7 @@ export let metadata = {
   description: "Match attestation for farcaster",
 };
 
-function MatchAttestationLogo(props: React.SVGProps<SVGSVGElement>) {
+export function MatchAttestationLogo(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       aria-label="Vercel Logo"
