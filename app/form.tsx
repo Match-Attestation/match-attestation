@@ -221,6 +221,7 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
         </div>
         <div className="text-left text-xl font-bold mt-4">Start date</div>
         <div className="text-left flex text-md">
+          {match.created_at}
           {new Date(match.created_at).toLocaleString()}
         </div>
         <img
