@@ -47,7 +47,7 @@ export function MatchCreateForm() {
     <>
       <div className="mx-8 w-full">
         <form
-          className="relative my-8"
+          className="relative mt-8 mb-6"
           ref={formRef}
           action={saveWithNewMatch}
           onSubmit={(event) => {
@@ -123,7 +123,7 @@ export function MatchCreateForm() {
             type="text"
             name="users"
           />
-          <div className={"pt-2 flex justify-end"}>
+          <div className={"pt-4 flex justify-end"}>
             <button
               className={clsx(
                 "flex items-center p-1 justify-center px-4 h-10 text-lg border bg-blue-500 text-white rounded-md w-24 focus:outline-none focus:ring focus:ring-blue-300 hover:bg-blue-700 focus:bg-blue-700",
