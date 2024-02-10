@@ -180,7 +180,7 @@ export function MatchCreateForm() {
               >
                 <path d="M11 11h4a1 1 0 0 0 0-2h-4V5a1 1 0 0 0-2 0v4H5a1 1 0 1 0 0 2h4v4a1 1 0 0 0 2 0v-4zm-1 9C4.477 20 0 15.523 0 10S4.477 0 10 0s10 4.477 10 10-4.477 10-10 10z" />
               </svg>
-              Add user
+              Add
             </button>
             <button
               className={`w-full sm:w-1/2 mt-2 sm:mt-0 flex items-center p-1 justify-center px-4 text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700 ${
