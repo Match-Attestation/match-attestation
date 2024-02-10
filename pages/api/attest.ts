@@ -6,9 +6,13 @@ import { ethers } from "ethers";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 
 import { NextRequest, NextResponse } from 'next/server';
+import { headers } from 'next/headers';
 
-export default async function handler( req: NextApiRequest,
-    res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    if (req.method !== 'POST') {
+        return NextResponse.json({ error: 'Invalid method' }, { status: 405 }, headers({ Allow: 'POST' });
+    }
+
     let matchId = req.query["id"] as string;
     if (!matchId) {
         return NextResponse.json({ error: 'Missing match ID' }, { status: 400 });
