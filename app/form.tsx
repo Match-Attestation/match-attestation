@@ -19,15 +19,9 @@ export function MatchCreateForm() {
   let [state, mutate] = useOptimistic(
     { pending: false },
     function createReducer(state, newMatch: MatchState) {
-      if (newMatch.newMatch) {
-        return {
-          pending: newMatch.pending,
-        };
-      } else {
-        return {
-          pending: newMatch.pending,
-        };
-      }
+      return {
+        pending: newMatch.pending,
+      };
     }
   );
 
@@ -39,6 +33,7 @@ export function MatchCreateForm() {
     winner: "",
     referee: "",
   };
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let [isPending, startTransition] = useTransition();
 
