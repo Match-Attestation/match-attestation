@@ -40,7 +40,7 @@ export default async function handler(
           width: "100%",
           height: "100%",
           backgroundColor: "#f9fafb",
-          padding: 12,
+          padding: 20,
           lineHeight: 1.2,
           fontSize: 24,
           color: "black",
@@ -48,7 +48,9 @@ export default async function handler(
       >
         <div
           style={{
+            display: "flex",
             fontSize: 32,
+            borderRadius: 24,
             marginBottom: 20,
           }}
         >
