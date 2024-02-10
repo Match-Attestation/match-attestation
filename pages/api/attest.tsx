@@ -64,7 +64,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (String(interactor.fid) === match.referee) {
         try {
-            await kv.set(matchId, { ...match, winners: winnersIds });
+            await kv.hset(`match:${matchId}`, { winners: winnersIds });
             return res.json(
                 getFrameHtmlResponse({
                     image: `${process.env["HOST"]}/api/image?id=${matchId}&refereeAttestationSuccess=true`,
