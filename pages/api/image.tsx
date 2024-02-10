@@ -48,6 +48,7 @@ export default async function handler(
         <div
           style={{
             display: "flex",
+            flexDirection: "column",
             borderRadius: 24,
             marginBottom: 20,
             backgroundColor: "white",
