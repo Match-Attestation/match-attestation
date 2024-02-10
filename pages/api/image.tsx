@@ -63,19 +63,20 @@ export default async function handler(
               display: "flex",
               flexDirection: "row",
             }}
-          ></div>
-          {match.users.map((user, index) => {
-            return (
-              <div style={{ marginTop: 6, marginRight: 4 }}>
-                {index + 1 + ". " + user}
-              </div>
-            );
-          })}
+          >
+            {match.users.map((user, index) => {
+              return (
+                <div style={{ marginTop: 6, marginRight: 4 }}>
+                  {index + 1 + ". " + user}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>,
       {
         width: 600,
-        height: 540,
+        height: 600,
         fonts: [
           {
             data: fontData,
