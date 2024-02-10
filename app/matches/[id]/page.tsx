@@ -77,12 +77,10 @@ export default async function Page({ params }: { params: { id: string } }) {
         <h2 className="text-md sm:text-xl mx-4">
           Create a new Match with up to 20 People / Teams
         </h2>
-        <div className="relative mt-6 sm:mt-8 mb-6">
-          <div className="text-left text-xl font-bold">Title</div>
-          <div>{match.title}</div>
-        </div>
         <div className="flex flex-wrap items-center justify-around max-w-4xl my-8 w-full bg-white rounded-md shadow-xl h-full border border-gray-100">
-          <DecideMatchWinnerForm match={match} />
+          <div className="relative mt-6 sm:mt-8 mb-6">
+            <DecideMatchWinnerForm match={match} />
+          </div>
         </div>
       </main>
     </div>
