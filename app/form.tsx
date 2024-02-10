@@ -52,6 +52,18 @@ export function MatchCreateForm() {
     }));
   };
 
+  const handleDeleteUser = (index: number) => {
+    const users = [...state.newMatch.users];
+    users.splice(index, 1);
+    setState((prevState) => ({
+      ...prevState,
+      newMatch: {
+        ...prevState.newMatch,
+        users,
+      },
+    }));
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const formData = new FormData(formRef.current as HTMLFormElement);
@@ -70,7 +82,7 @@ export function MatchCreateForm() {
 
   return (
     <>
-      <div className="mx-8 w-full">
+      <div className="mx-4 sm:mx-8 w-full">
         <form
           className="relative mt-8 mb-6"
           ref={formRef}
@@ -79,7 +91,7 @@ export function MatchCreateForm() {
           <div className="text-left text-xl font-bold">Title</div>
           <input
             aria-label="Match Title"
-            className="pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
+            className="px-3 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
             maxLength={150}
             placeholder="Describe your match..."
             required
@@ -90,30 +102,56 @@ export function MatchCreateForm() {
           <div className="text-left text-xl font-bold mt-4">Referee</div>
           <input
             aria-label="Match Referee"
-            className="pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
+            className="px-3 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
             maxLength={150}
             placeholder="User who will decide the winner..."
             required
             type="text"
             name="referee"
           />
-          <div className="text-left text-xl font-bold mt-4">Users</div>
+          <div className="text-left text-xl font-bold mt-4">Participants</div>
           {state.newMatch.users.map((user, index) => (
-            <input
-              key={index}
-              value={user}
-              onChange={(e) => handleUserChange(index, e.target.value)}
-              required
-              className="mt-2 pl-3 pr-28 py-3 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
-              placeholder={`User ${index + 1}`}
-              aria-label={`User ${index + 1}`}
-              type="text"
-              maxLength={150}
-            />
+            <div
+              className={`flex items-center space-x-4 ${
+                index == 0 ? "mt-1" : "mt-2"
+              }`}
+            >
+              <input
+                key={index}
+                value={user}
+                onChange={(e) => handleUserChange(index, e.target.value)}
+                required
+                className="flex px-3 py-3 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
+                placeholder={`Participant №${index + 1}`}
+                aria-label={`Participant №${index + 1}`}
+                type="text"
+                maxLength={150}
+              />
+              {state.newMatch.users.length > 2 && (
+                <button
+                  className={`flex items-center justify-center text-lg border bg-blue-500 text-white rounded-md focus:outline-none focus:ring focus:ring-blue-300 hover:bg-blue-700 focus:bg-blue-700 ${
+                    state.pending ? "bg-gray-700 cursor-not-allowed" : ""
+                  }`}
+                  style={{ minWidth: "2.5rem", height: "2.5rem" }}
+                  type="button"
+                  onClick={() => handleDeleteUser(index)}
+                >
+                  <svg
+                    width={"1.5rem"}
+                    fill="white"
+                    viewBox="-2 -2 24 24"
+                    style={{ rotate: "45deg" }}
+                    preserveAspectRatio="xMinYMin"
+                  >
+                    <path d="M11 11h4a1 1 0 0 0 0-2h-4V5a1 1 0 0 0-2 0v4H5a1 1 0 1 0 0 2h4v4a1 1 0 0 0 2 0v-4zm-1 9C4.477 20 0 15.523 0 10S4.477 0 10 0s10 4.477 10 10-4.477 10-10 10z" />
+                  </svg>
+                </button>
+              )}
+            </div>
           ))}
-          <div className="flex space-x-4 mt-4">
+          <div className="flex flex-col sm:flex-row sm:space-x-4 mt-4">
             <button
-              className={`w-1/2 flex items-center p-1 justify-center px-4 h-10 text-lg border bg-blue-500 text-white rounded-md  focus:outline-none focus:ring focus:ring-blue-300 hover:bg-blue-700 focus:bg-blue-700 ${
+              className={`w-full sm:w-1/2 flex items-center p-1 justify-center px-4 h-10 text-lg border bg-blue-500 text-white rounded-md  focus:outline-none focus:ring focus:ring-blue-300 hover:bg-blue-700 focus:bg-blue-700 ${
                 state.pending ? "bg-gray-700 cursor-not-allowed" : ""
               }`}
               type="button"
@@ -131,9 +169,8 @@ export function MatchCreateForm() {
               </svg>
               Add user
             </button>
-
             <button
-              className={`w-1/2 flex items-center p-1 justify-center px-4 h-10 text-lg border bg-blue-500 text-white rounded-md focus:outline-none focus:ring focus:ring-blue-300 hover:bg-blue-700 focus:bg-blue-700 ${
+              className={`w-full sm:w-1/2 mt-2 sm:mt-0 flex items-center p-1 justify-center px-4 h-10 text-lg border bg-blue-500 text-white rounded-md focus:outline-none focus:ring focus:ring-blue-300 hover:bg-blue-700 focus:bg-blue-700 ${
                 state.pending ? "bg-gray-700 cursor-not-allowed" : ""
               }`}
               type="submit"
