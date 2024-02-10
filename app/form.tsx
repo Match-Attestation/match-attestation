@@ -222,7 +222,7 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
         <div className="text-left text-xl font-bold mt-4">Start date</div>
         <div className="text-left flex text-md">
           {match.created_at}
-          {new Date(match.created_at).toLocaleString()}
+          {new Date(Number(match.created_at)).toLocaleString()}
         </div>
         <img
           className="mt-4 w-full"
@@ -235,7 +235,7 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
               className={`w-full mt-2 sm:mt-0 flex items-center p-1 justify-center px-4 text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700`}
               style={{ height: "2.875rem" }}
             >
-              Create new match
+              Create another match
             </button>
           </Link>
         </div>
