@@ -109,15 +109,9 @@ export default async function handler(
         fonts: [
           {
             data: fontData,
-            name: "Arial",
+            name: "Roboto",
             style: "normal",
             weight: 400,
-          },
-          {
-            data: fontData,
-            name: "Arial",
-            style: "normal",
-            weight: 700,
           },
         ],
       }
