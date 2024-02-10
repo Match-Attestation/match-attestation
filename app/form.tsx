@@ -12,7 +12,7 @@ type MatchState = {
   newMatch: Match;
   pending: boolean;
   maxUsersCount: number;
-  voted?: boolean;
+  winnerDecided?: boolean;
 };
 
 export function MatchCreateForm() {
@@ -23,7 +23,7 @@ export function MatchCreateForm() {
     created_at: new Date().getTime(),
     title: "",
     users: ["", ""],
-    winner: "",
+    winners: [],
     referee: "",
   };
 
@@ -201,125 +201,22 @@ export function MatchCreateForm() {
   );
 }
 
-function PollOptions({
-  match,
-  onChange,
-}: {
-  match: Match;
-  onChange: (index: number) => void;
-}) {
-  return (
-    <div className="mb-4 text-left">
-      {match.users
-        .filter((e) => e !== "")
-        .map((user, index) => (
-          <label key={index} className="block">
-            {user}
-          </label>
-        ))}
-    </div>
-  );
-}
-
-function PollResults({ poll }: { poll: Match }) {
+function MatchResults({ match }: { match: Match }) {
   return (
     <div className="mb-4">
       <img
-        src={`/api/image?id=${poll.id}&results=true&date=${Date.now()}`}
-        alt="poll results"
+        src={`/api/image?id=${match.id}&results=true&date=${Date.now()}`}
+        alt="Match results"
       />
     </div>
   );
 }
 
-export function PollVoteForm({
-  poll,
-  viewResults,
-}: {
-  poll: Match;
-  viewResults?: boolean;
-}) {
-  const [selectedOption, setSelectedOption] = useState(-1);
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  viewResults = true; // Only allow voting via the api
-  let formRef = useRef<HTMLFormElement>(null);
-  let voteOnPoll = attestMatch.bind(null, poll);
-  let [isPending, startTransition] = useTransition();
-  let [state, mutate] = useOptimistic(
-    { showResults: viewResults },
-    function createReducer({ showResults }, state: MatchState) {
-      if (state.voted || viewResults) {
-        return {
-          showResults: true,
-        };
-      } else {
-        return {
-          showResults: false,
-        };
-      }
-    }
-  );
-
-  const handleVote = (index: number) => {
-    setSelectedOption(index);
-  };
-
+export function DecideMatchWinnerForm({ match }: { match: Match }) {
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg p-4 m-4">
-      <div className="font-bold text-xl mb-2">{poll.title}</div>
-      {/* <form
-        className="relative my-8"
-        ref={formRef}
-        action={() => voteOnPoll(selectedOption)}
-        onSubmit={(event) => {
-          event.preventDefault();
-          let formData = new FormData(event.currentTarget);
-          let newMatch = {
-            ...poll,
-          };
-
-          // @ts-ignore
-          newMatch[`votes${selectedOption}`] += 1;
-
-          formRef.current?.reset();
-          startTransition(async () => {
-            mutate({
-              newMatch,
-              pending: false,
-              voted: true,
-            });
-
-            await redirectToMatches();
-            // await attestMatch(newMatch, selectedOption);
-          });
-        }}
-      >
-        {state.showResults ? (
-          <PollResults poll={poll} />
-        ) : (
-          <PollOptions poll={poll} onChange={handleVote} />
-        )}
-        {state.showResults ? (
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            type="submit"
-          >
-            Back
-          </button>
-        ) : (
-          <button
-            className={
-              "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" +
-              (selectedOption < 1 ? " cursor-not-allowed" : "")
-            }
-            type="submit"
-            disabled={selectedOption < 1}
-          >
-            Vote
-          </button>
-        )}
-      </form> */}
+      <div className="font-bold text-xl mb-2">{match.title}</div>
+      <MatchResults match={match} />
     </div>
   );
 }
