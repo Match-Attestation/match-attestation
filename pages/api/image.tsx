@@ -166,6 +166,9 @@ export default async function handler(
                         : 20
                       : 24,
                   marginTop: 4,
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
                 }}
               >
                 {index + 1 + ". " + user}
