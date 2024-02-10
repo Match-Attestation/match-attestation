@@ -213,6 +213,16 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
             <div key={index}>{index + 1 + ". " + user}</div>
           ))}
         </div>
+        <div className="text-left text-xl font-bold mt-4">Winners</div>
+        <div className="text-left flex text-md">
+          {match.winners.length > 0
+            ? match.winners.join(", ")
+            : "No winners yet..."}
+        </div>
+        <div className="text-left text-xl font-bold mt-4">Start date</div>
+        <div className="text-left flex text-md">
+          {new Date(match.created_at).toLocaleString()}
+        </div>
         <img
           className="mt-4 w-full"
           src={`/api/image?id=${match.id}`}
