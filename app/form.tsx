@@ -198,22 +198,24 @@ export function MatchCreateForm() {
   );
 }
 
-function MatchResults({ match }: { match: Match }) {
-  return (
-    <div className="mb-4">
-      <img
-        src={`/api/image?id=${match.id}&date=${Date.now()}`}
-        alt="Match results"
-      />
-    </div>
-  );
-}
-
 export function DecideMatchWinnerForm({ match }: { match: Match }) {
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg p-4 m-4">
-      <div className="font-bold text-xl mb-2">{match.title}</div>
-      <MatchResults match={match} />
+      <div className="text-left text-xl font-bold">Title</div>
+      <div>{match.title}</div>
+      <div className="text-left text-xl font-bold mt-4">Referee</div>
+      <div>{match.referee}</div>
+      <div className="text-left text-xl font-bold mt-4">Participants</div>
+      <div className="flex flex-col">
+        {match.users.map((user, index) => (
+          <div key={index}>{index + 1 + ". " + user}</div>
+        ))}
+      </div>
+      <img
+        className="mt-4 w-full"
+        src={`/api/image?id=${match.id}`}
+        alt="Match results"
+      />
     </div>
   );
 }
