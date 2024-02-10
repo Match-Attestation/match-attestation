@@ -69,7 +69,7 @@ export default async function handler(
             style={{
               display: "flex",
               flexDirection: "column",
-              width: "calc(50% - 20px)",
+              width: "48.335%",
             }}
           >
             <div
@@ -127,8 +127,8 @@ export default async function handler(
               marginBottom: 20,
               backgroundColor: "white",
               padding: "12px 24px",
-              width: "calc(50% - 20px)",
-              marginLeft: "20px",
+              width: "48.335%",
+              marginLeft: "3.333%",
               boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
             }}
           >
