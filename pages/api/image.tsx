@@ -76,13 +76,6 @@ export default async function handler(
           <div style={{ fontSize: 16, marginTop: 12 }}>Referee</div>
           <div style={{ fontSize: 24, marginTop: 4 }}>{match.referee}</div>
 
-          <div style={{ fontSize: 16, marginTop: 12 }}>Participants</div>
-          {match.users.map((user, index) => (
-            <div key={index} style={{ fontSize: 24, marginTop: 4 }}>
-              {index + 1 + ". " + user}
-            </div>
-          ))}
-
           <div style={{ fontSize: 16, marginTop: 12 }}>Winners</div>
           <div style={{ fontSize: 24, marginTop: 4 }}>
             {match.winners.length > 0
@@ -94,6 +87,26 @@ export default async function handler(
           <div style={{ fontSize: 24, marginTop: 4 }}>
             {new Date(Number(match.created_at)).toLocaleString()}
           </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            fontSize: 24,
+            borderRadius: 24,
+            marginBottom: 20,
+            backgroundColor: "white",
+            padding: "12px 24px",
+            width: "45%",
+            marginLeft: "10%",
+            boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <div style={{ fontSize: 16, marginTop: 12 }}>Participants</div>
+          {match.users.map((user, index) => (
+            <div key={index} style={{ fontSize: 24, marginTop: 4 }}>
+              {index + 1 + ". " + user}
+            </div>
+          ))}
         </div>
       </div>,
       {
