@@ -133,7 +133,7 @@ export default async function handler(
               <div style={{ fontSize: 20, marginTop: 4 }}>
                 {new Date(Number(match.created_at) + MATCH_EXPIRY)
                   .toUTCString()
-                  .slice(5, 17)}
+                  .slice(5, 17) + " (UTC)"}
               </div>
             </div>
           </div>
