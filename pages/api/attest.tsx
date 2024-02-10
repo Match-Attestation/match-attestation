@@ -34,13 +34,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     if (!isValid) {
-        return res.status(406).json({ error: 'Invalid frame message' });
+        return res.status(400).json({ error: 'Invalid frame message' });
     }
 
     const { input, interactor, liked, recasted } = message;
 
     if (!input) {
-        return res.status(406).json({ error: 'Invalid input' });
+        return res.status(494).json({ error: 'Invalid input' });
     }
 
     if (!liked || !recasted) {
@@ -53,7 +53,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let winners = input.trim().split(',').map((i) => parseInt(i));
     if (winners.length < 1) {
-        return res.status(406).json({ error: 'Invalid input' });
+        return res.status(496).json({ error: 'Invalid input' });
     }
 
     if (match.created_at + MATCH_EXPIRY < Date.now()) {
