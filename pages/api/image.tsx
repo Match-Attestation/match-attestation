@@ -129,11 +129,11 @@ export default async function handler(
                 boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <div style={{ fontSize: 16, marginTop: 12 }}>Expires</div>
+              <div style={{ fontSize: 16 }}>Expires</div>
               <div style={{ fontSize: 20, marginTop: 4 }}>
-                {new Date(
-                  Number(match.created_at) + MATCH_EXPIRY
-                ).toLocaleString()}
+                {new Date(Number(match.created_at) + MATCH_EXPIRY)
+                  .toUTCString()
+                  .slice(5, 17) + " (UTC)"}
               </div>
             </div>
           </div>
