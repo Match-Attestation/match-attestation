@@ -203,7 +203,8 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
   return (
     <div className="mx-4 sm:mx-8 w-full">
       <div className="relative mt-6 sm:mt-8 mb-6">
-        <div className="text-left text-xl font-bold">{match.title}</div>
+        <div className="text-left text-xl font-bold">Title</div>
+        <div className="text-left flex text-xl">{match.title}</div>
         <div className="text-left text-xl font-bold mt-4">👩‍⚖️ Referee</div>
         <div className="text-left flex text-md">{match.referee}</div>
         <div className="text-left text-xl font-bold mt-4">🥷 Participants</div>
