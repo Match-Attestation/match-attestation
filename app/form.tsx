@@ -94,7 +94,7 @@ export function MatchCreateForm() {
           <input
             aria-label="Match Title"
             className="px-3 py-2 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
-            maxLength={130}
+            maxLength={120}
             placeholder="Describe your match..."
             required
             type="text"
