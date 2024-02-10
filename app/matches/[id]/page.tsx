@@ -4,27 +4,30 @@ import { DecideMatchWinnerForm } from "@/app/form";
 import Head from "next/head";
 import { Metadata, ResolvingMetadata } from "next";
 
-async function getPoll(id: string): Promise<Match> {
-  let nullPoll = {
+async function getMatch(id: string): Promise<Match> {
+  let nullMatch: Match = {
     id: "",
-    title: "No poll found",
     created_at: 0,
+    title: "No match found",
     users: [],
     winners: [],
     referee: "",
   };
 
   try {
-    let poll: Match | null = await kv.hgetall(`poll:${id}`);
+    console.log(id);
 
-    if (!poll) {
-      return nullPoll;
+    let match: Match | null = await kv.hgetall(`match:${id}`);
+
+    console.log(match);
+
+    if (!match) {
+      return nullMatch;
     }
-
-    return poll;
+    return match;
   } catch (error) {
     console.error(error);
-    return nullPoll;
+    return nullMatch;
   }
 }
 
@@ -39,23 +42,21 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   // read route params
   const id = params.id;
-  const poll = await getPoll(id);
+  const match = await getMatch(id);
 
   const fcMetadata: Record<string, string> = {
     "fc:frame": "vNext",
     "fc:frame:post_url": `${process.env["HOST"]}/api/vote?id=${id}`,
     "fc:frame:image": `${process.env["HOST"]}/api/image?id=${id}`,
   };
-  poll.users
-    .filter((o) => o !== "")
-    .map((option, index) => {
-      fcMetadata[`fc:frame:button:${index + 1}`] = option;
-    });
+  match.users.map((option, index) => {
+    fcMetadata[`fc:frame:button:${index + 1}`] = option;
+  });
 
   return {
-    title: poll.title,
+    title: match.title,
     openGraph: {
-      title: poll.title,
+      title: match.title,
       images: [`/api/image?id=${id}`],
     },
     other: {
@@ -64,18 +65,9 @@ export async function generateMetadata(
     metadataBase: new URL(process.env["HOST"] || ""),
   };
 }
-function getMeta(poll: Match) {
-  // This didn't work for some reason
-  return (
-    <Head>
-      <meta property="og:image" content="" key="test"></meta>
-      <meta property="og:title" content="My page title" key="title" />
-    </Head>
-  );
-}
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const poll = await getPoll(params.id);
+  const poll = await getMatch(params.id);
 
   return (
     <>

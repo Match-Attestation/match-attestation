@@ -201,98 +201,22 @@ export function MatchCreateForm() {
   );
 }
 
-function PollOptions({
-  match,
-  onChange,
-}: {
-  match: Match;
-  onChange: (index: number) => void;
-}) {
-  return (
-    <div className="mb-4 text-left">
-      {match.users
-        .filter((e) => e !== "")
-        .map((user, index) => (
-          <label key={index} className="block">
-            {user}
-          </label>
-        ))}
-    </div>
-  );
-}
-
-function MatchResults(match: Match) {
+function MatchResults({ match }: { match: Match }) {
   return (
     <div className="mb-4">
       <img
         src={`/api/image?id=${match.id}&results=true&date=${Date.now()}`}
-        alt="match results"
+        alt="Match results"
       />
     </div>
   );
 }
 
-export function DecideMatchWinnerForm(match: Match) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  let formRef = useRef<HTMLFormElement>(null);
-
+export function DecideMatchWinnerForm({ match }: { match: Match }) {
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg p-4 m-4">
-      <div className="font-bold text-xl mb-2">{poll.title}</div>
-      <form
-        className="relative my-8"
-        ref={formRef}
-        action={() => decideMatchWinner(selectedOption)}
-        onSubmit={(event) => {
-          event.preventDefault();
-          let formData = new FormData(event.currentTarget);
-          let newMatch = {
-            ...poll,
-          };
-
-          // @ts-ignore
-          newMatch[`votes${selectedOption}`] += 1;
-
-          formRef.current?.reset();
-          startTransition(async () => {
-            mutate({
-              newMatch,
-              pending: false,
-              voted: true,
-            });
-
-            await redirectToMatches();
-            // await attestMatch(newMatch, selectedOption);
-          });
-        }}
-      >
-        {state.showResults ? (
-          <MatchResults poll={poll} />
-        ) : (
-          <PollOptions poll={poll} onChange={handleVote} />
-        )}
-        {state.showResults ? (
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            type="submit"
-          >
-            Back
-          </button>
-        ) : (
-          <button
-            className={
-              "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" +
-              (selectedOption < 1 ? " cursor-not-allowed" : "")
-            }
-            type="submit"
-            disabled={selectedOption < 1}
-          >
-            Vote
-          </button>
-        )}
-      </form>
+      <div className="font-bold text-xl mb-2">{match.title}</div>
+      <MatchResults match={match} />
     </div>
   );
 }
