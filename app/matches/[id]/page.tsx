@@ -79,7 +79,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         </h2>
         <div
           className="flex flex-wrap items-center justify-around my-8 w-full bg-white rounded-md shadow-xl h-full border border-gray-100"
-          style={{ width: "36rem", maxWidth: "100%" }}
+          style={{ width: "36rem", maxWidth: "90dvw" }}
         >
           <DecideMatchWinnerForm match={match} />
         </div>
