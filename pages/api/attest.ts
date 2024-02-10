@@ -77,11 +77,11 @@ async function getResponse(req: NextRequest) {
     // Initialize SchemaEncoder with the schema string
     const schemaEncoder = new SchemaEncoder("bytes32 id,string title,bytes32 referee,bytes32[] players,bytes32[] winnners");
     const encodedData = schemaEncoder.encodeData([
-        { name: "id", value: interactor.fid, type: "bytes32" },
+        { name: "id", value: match.id, type: "bytes32" },
         { name: "title", value: match.title, type: "string" },
         { name: "referee", value: match.referee, type: "bytes32" },
         { name: "players", value: match.users, type: "bytes32[]" },
-        { name: "winnners", value: match.winner, type: "bytes32[]" }
+        { name: "winnners", value: winnersIds, type: "bytes32[]" }
     ]);
     const schemaUID = "0xf0146b763d066465cb2fa39a158ff83843875282abb607cb053c11cadc60fc4a";
 
