@@ -48,10 +48,11 @@ export default async function handler(
         <div
           style={{
             display: "flex",
-            fontSize: 32,
+            fontSize: 24,
             borderRadius: 24,
             marginBottom: 20,
             backgroundColor: "white",
+            padding: "12px 24px",
             width: "100%",
             boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
           }}
@@ -61,33 +62,35 @@ export default async function handler(
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
+            fontSize: 24,
+            borderRadius: 24,
+            marginBottom: 20,
             backgroundColor: "white",
-            padding: "20px 24px",
-            borderRadius: "10px",
-            maxWidth: "90%",
+            padding: "12px 24px",
+            width: "45%",
+            boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
           }}
         >
           <div style={{ fontSize: 32 }}>{match.title}</div>
 
-          <div style={{ fontSize: 20, marginTop: 12 }}>Referee</div>
+          <div style={{ fontSize: 16, marginTop: 12 }}>Referee</div>
           <div style={{ fontSize: 24, marginTop: 4 }}>{match.referee}</div>
 
-          <div style={{ fontSize: 20, marginTop: 12 }}>Participants</div>
+          <div style={{ fontSize: 16, marginTop: 12 }}>Participants</div>
           {match.users.map((user, index) => (
             <div key={index} style={{ fontSize: 24, marginTop: 4 }}>
               {index + 1 + ". " + user}
             </div>
           ))}
 
-          <div style={{ fontSize: 20, marginTop: 12 }}>Winners</div>
+          <div style={{ fontSize: 16, marginTop: 12 }}>Winners</div>
           <div style={{ fontSize: 24, marginTop: 4 }}>
             {match.winners.length > 0
               ? match.winners.join(", ")
               : "No winners yet..."}
           </div>
 
-          <div style={{ fontSize: 20, marginTop: 12 }}>Start Date</div>
+          <div style={{ fontSize: 16, marginTop: 12 }}>Start Date</div>
           <div style={{ fontSize: 24, marginTop: 4 }}>
             {new Date(Number(match.created_at)).toLocaleString()}
           </div>
