@@ -113,6 +113,12 @@ export default async function handler(
             style: "normal",
             weight: 400,
           },
+          {
+            data: fontData,
+            name: "Roboto",
+            style: "normal",
+            weight: 700,
+          },
         ],
       }
     );
