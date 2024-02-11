@@ -88,16 +88,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     eas.connect(signer as any);
 
+    const schemaUID = "0x062ddd7a7a5e572efd04583673e06fd9c7825308eddcafb95a5d13a809edeeae";
     // Initialize SchemaEncoder with the schema string
-    const schemaEncoder = new SchemaEncoder("bytes32 id,string title,bytes32 referee,bytes32[] players,bytes32[] winnners");
+    const schemaEncoder = new SchemaEncoder("bytes32 id,string title,string[] tags,uint64 referee,uint64[] players,uint64[] winners");
     const encodedData = schemaEncoder.encodeData([
         { name: "id", value: match.id, type: "bytes32" },
-        { name: "title", value: match.title, type: "string" },
-        { name: "referee", value: match.referee, type: "bytes32" },
-        { name: "players", value: match.users, type: "bytes32[]" },
-        { name: "winnners", value: winnersIds, type: "bytes32[]" }
+	    { name: "title", value: match.title, type: "string" },
+	    { name: "tags", value: [], type: "string[]" },
+	    { name: "referee", value: match.referee, type: "uint64" },
+	    { name: "players", value: match.users, type: "uint64[]" },
+	    { name: "winners", value: match.winners, type: "uint64[]" },
     ]);
-    const schemaUID = "0xf0146b763d066465cb2fa39a158ff83843875282abb607cb053c11cadc60fc4a";
+
 
     let refereeAddress = interactor.verified_accounts[0];
     if (!refereeAddress) {
