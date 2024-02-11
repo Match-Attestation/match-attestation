@@ -124,7 +124,7 @@ export default async function handler(
                 />
                 <div>Referee</div>
               </div>
-              <div style={{ fontSize: 24, marginTop: 4 }}>{match.referee}</div>
+              <div style={{ fontSize: 24, marginTop: 2 }}>{match.referee}</div>
             </div>
             <div
               style={{
