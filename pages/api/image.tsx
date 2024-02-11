@@ -56,8 +56,7 @@ export default async function handler(
             backgroundColor: "#FFFFFF",
             padding: "12px 24px",
             width: "100%",
-            boxShadow:
-              "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset",
+            boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
           }}
         >
           <div style={{ fontSize: 16 }}>Match Title</div>
@@ -87,15 +86,14 @@ export default async function handler(
               padding: "12px 24px",
               width: "48.335%",
 
-              boxShadow:
-                "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset",
+              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
             }}
           >
             <div
               style={{ fontSize: 16, display: "flex", alignItems: "center" }}
             >
               <img
-                src="https://em-content.zobj.net/source/apple/354/ninja_1f977.png"
+                src={"https://" + baseUrl + "/emojis/ninja.png"}
                 width={18}
                 height={18}
                 style={{ marginRight: 6 }}
@@ -143,8 +141,7 @@ export default async function handler(
                 backgroundColor: "#FFFFFF",
                 padding: "12px 24px",
                 width: "100%",
-                boxShadow:
-                  "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
               }}
             >
               <div
@@ -174,15 +171,14 @@ export default async function handler(
                 backgroundColor: "#FFFFFF",
                 padding: "12px 24px",
                 width: "100%",
-                boxShadow:
-                  "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
               }}
             >
               <div
                 style={{ fontSize: 16, display: "flex", alignItems: "center" }}
               >
                 <img
-                  src="https://em-content.zobj.net/source/apple/354/woman-judge_1f469-200d-2696-fe0f.png"
+                  src={"https://" + baseUrl + "/emojis/woman-judge.png"}
                   width={18}
                   height={18}
                   style={{ marginRight: 6 }}
@@ -201,15 +197,14 @@ export default async function handler(
                 backgroundColor: "#FFFFFF",
                 padding: "12px 24px",
                 width: "100%",
-                boxShadow:
-                  "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
               }}
             >
               <div
                 style={{ fontSize: 16, display: "flex", alignItems: "center" }}
               >
                 <img
-                  src="https://em-content.zobj.net/source/apple/354/stopwatch_23f1-fe0f.png"
+                  src={"https://" + baseUrl + "/emojis/stopwatch.png"}
                   width={18}
                   height={18}
                   style={{ marginRight: 6 }}
