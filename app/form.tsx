@@ -208,7 +208,13 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
       <div className="relative mt-6 sm:mt-8 mb-6">
         <div className="text-left text-xl font-bold">Title</div>
         <div className="text-left flex text-xl">{match.title}</div>
-        <div className="text-left text-xl font-bold mt-4">👩‍⚖️ Referee</div>
+        <div className="flex flex-row items-center text-left text-xl font-bold mt-4">
+          <img
+            src="/emojis/woman-judge.png"
+            style={{ marginRight: 6, width: "1.25rem", height: "1.25rem" }}
+          />
+          <div>Referee</div>
+        </div>
         <div className="text-left flex text-md">{match.referee}</div>
         <div className="flex flex-row items-center text-left text-xl font-bold mt-4">
           <img
@@ -222,13 +228,25 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
             <div key={index}>{index + 1 + ". " + user}</div>
           ))}
         </div>
-        <div className="text-left text-xl font-bold mt-4">🏆 Winners</div>
+        <div className="flex flex-row items-center text-left text-xl font-bold mt-4">
+          <img
+            src="/emojis/trophy.png"
+            style={{ marginRight: 6, width: "1.25rem", height: "1.25rem" }}
+          />
+          <div>Winners</div>
+        </div>
         <div className="text-left flex text-md">
           {match.winners.length > 0
             ? match.winners.join(", ")
             : "No winners yet..."}
         </div>
-        <div className="text-left text-xl font-bold mt-4">⏱️ Expires</div>
+        <div className="flex flex-row items-center text-left text-xl font-bold mt-4">
+          <img
+            src="/emojis/stopwatch.png"
+            style={{ marginRight: 6, width: "1.25rem", height: "1.25rem" }}
+          />
+          <div>Expires</div>
+        </div>
         <div className="text-left flex text-md">
           {new Date(Number(match.created_at) + MATCH_EXPIRY)
             .toUTCString()
