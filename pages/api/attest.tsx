@@ -77,7 +77,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const eas = new EAS(EASContractAddress);
 
     let production = false// process.env.NODE_ENV === 'production';
-    const provider = production ? new ethers.providers.JsonRpcProvider(process.env.RPC_URL) : ethers.providers.getDefaultProvider("sepolia");
+    const provider = production ? new ethers.JsonRpcProvider(process.env.RPC_URL) : ethers.getDefaultProvider("sepolia");
 
     const privateKey = process.env.PRIVATE_KEY;
     if (!privateKey) {
@@ -104,30 +104,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(497).json({ error: 'Referee must connect wallet to the farcaster' });
     }
 
-    const tx = await eas.attest({
-        schema: schemaUID,
-        data: {
-            recipient: refereeAddress,
-            expirationTime: BigInt(Date.now() + 100 * 60 * 60 * 24 * 365),
-            revocable: true,
-            data: encodedData,
-        },
-    });
-
-    const newAttestationUID = await tx.wait();
-
-    console.log("New attestation UID:", newAttestationUID);
-
     try {
-        await kv.hset(`match:${matchId}`, { attestationUID: newAttestationUID });
-    } catch {
-        return res.status(588).json({ error: 'Failed to save attestation' });
-    }
+        const tx = await eas.attest({
+            schema: schemaUID,
+            data: {
+                recipient: refereeAddress,
+                expirationTime: BigInt(Date.now() + 100 * 60 * 60 * 24 * 365),
+                revocable: true,
+                data: encodedData,
+            },
+        });
 
-    return res.json(
-        getFrameHtmlResponse({
-            image: `${process.env["HOST"]}/api/image?id=${matchId}&attestationUID=${newAttestationUID}`,
-        })
-    )
+        const newAttestationUID = await tx.wait();
+
+        console.log("New attestation UID:", newAttestationUID);
+
+        try {
+            await kv.hset(`match:${matchId}`, { attestationUID: newAttestationUID });
+        } catch {
+            return res.status(588).json({ error: 'Failed to save attestation' });
+        }
+
+        return res.json(
+            getFrameHtmlResponse({
+                image: `${process.env["HOST"]}/api/image?id=${matchId}&attestationUID=${newAttestationUID}`,
+            })
+        )
+    } catch {
+        return res.status(589).json({ error: 'Failed to attest' });
+    }
 }
 
