@@ -70,26 +70,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         )
     }
 
-    // Attest to win
-    const EASContractAddress = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e"; // Sepolia v0.26
-
-    // Initialize the sdk with the address of the EAS Schema contract address
-    const eas = new EAS(EASContractAddress);
-
-    let production = false// process.env.NODE_ENV === 'production';
-    const provider = production ? new ethers.JsonRpcProvider(process.env.RPC_URL) : ethers.getDefaultProvider("sepolia");
-
-    const privateKey = process.env.PRIVATE_KEY;
-    if (!privateKey) {
-        throw new Error('Private key is missing');
+    let refereeAddress = interactor.verified_accounts[0];
+    if (!refereeAddress) {
+        return res.status(497).json({ error: 'Referee must connect wallet to the farcaster' });
     }
-
-    const signer: ethers.Signer = new ethers.Wallet(privateKey, provider);
-
-    eas.connect(signer as any);
-
-    const schemaUID = "0xb790eba667e82b03fa40ddaa62f23d6fc3256cbe464b3b9baf4e2d1c9c31074b";
-    // Initialize SchemaEncoder with the schema string
+    
     const schemaEncoder = new SchemaEncoder("string id,string title,string[] tags,string referee,string[] players,string[] winners");
     const encodedData = schemaEncoder.encodeData([
         { name: "id", value: match.id, type: "string" },
@@ -100,40 +85,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	    { name: "winners", value: match.winners, type: "string[]" },
     ]);
 
-
-    let refereeAddress = interactor.verified_accounts[0];
-    if (!refereeAddress) {
-        return res.status(497).json({ error: 'Referee must connect wallet to the farcaster' });
-    }
-
     try {
-        const tx = await eas.attest({
-            schema: schemaUID,
-            data: {
-                recipient: refereeAddress,
-                expirationTime: BigInt(Date.now() + 100 * 60 * 60 * 24 * 365),
-                revocable: true,
-                data: encodedData,
-            },
-        });
-
-        const newAttestationUID = await tx.wait();
-
-        console.log("New attestation UID:", newAttestationUID);
-
-        try {
-            await kv.hset(`match:${matchId}`, { attestationUID: newAttestationUID });
-            await kv.expire(`match:${match.id}`, 0);
-        } catch {
-            return res.status(588).json({ error: 'Failed to save attestation' });
-        }
-
-        return res.json(
-            getFrameHtmlResponse({
-                image: `${process.env["HOST"]}/api/image?id=${matchId}&attestationUID=${newAttestationUID}`,
-            })
-        )
+        kv.hset(`attestJob:${matchId}`, { data: encodedData, referee: refereeAddress });
     } catch {
-        return res.status(589).json({ error: 'Failed to attest' });
+        return res.status(588).json({ error: 'Failed to save attestation' });
     }
+
+    return res.json(getFrameHtmlResponse({
+        image: `${process.env["HOST"]}/api/image?id=${matchId}&resultsAreBeingAttested=true`,
+    }));
 }
