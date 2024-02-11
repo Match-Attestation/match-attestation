@@ -56,7 +56,8 @@ export default async function handler(
             backgroundColor: "#FFFFFF",
             padding: "12px 24px",
             width: "100%",
-            boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+            boxShadow:
+              "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset",
           }}
         >
           <div style={{ fontSize: 16 }}>Match Title</div>
@@ -86,7 +87,8 @@ export default async function handler(
               padding: "12px 24px",
               width: "48.335%",
 
-              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+              boxShadow:
+                "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset",
             }}
           >
             <div
@@ -141,7 +143,8 @@ export default async function handler(
                 backgroundColor: "#FFFFFF",
                 padding: "12px 24px",
                 width: "100%",
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                boxShadow:
+                  "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset",
               }}
             >
               <div
@@ -171,7 +174,8 @@ export default async function handler(
                 backgroundColor: "#FFFFFF",
                 padding: "12px 24px",
                 width: "100%",
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                boxShadow:
+                  "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset",
               }}
             >
               <div
@@ -197,7 +201,8 @@ export default async function handler(
                 backgroundColor: "#FFFFFF",
                 padding: "12px 24px",
                 width: "100%",
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                boxShadow:
+                  "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset",
               }}
             >
               <div
