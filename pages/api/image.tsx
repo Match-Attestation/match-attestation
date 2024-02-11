@@ -57,7 +57,7 @@ export default async function handler(
             boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
           }}
         >
-          <div style={{ fontSize: 16 }}>🤯 Title</div>
+          <div style={{ fontSize: 16 }}>Title</div>
           <div
             style={{
               fontSize: match.title.length > 80 ? 24 : 32,
@@ -152,7 +152,7 @@ export default async function handler(
               boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <div style={{ fontSize: 16 }}>Participants</div>
+            <div style={{ fontSize: 16 }}>🥷 Participants</div>
             {match.users.map((user, index) => (
               <div
                 key={index}
@@ -189,6 +189,9 @@ export default async function handler(
             weight: 400,
           },
         ],
+        graphemeImages: {
+          "🥷": "https://em-content.zobj.net/source/apple/354/ninja_1f977.png",
+        },
       }
     );
 
