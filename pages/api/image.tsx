@@ -152,7 +152,9 @@ export default async function handler(
               boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <div style={{ fontSize: 16 }}>
+            <div
+              style={{ fontSize: 16, display: "flex", alignItems: "center" }}
+            >
               <img
                 src="https://em-content.zobj.net/source/apple/354/ninja_1f977.png"
                 width={16}
