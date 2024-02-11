@@ -76,10 +76,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Initialize the sdk with the address of the EAS Schema contract address
     const eas = new EAS(EASContractAddress);
 
-    // Gets a default provider (in production use something else like infura/alchemy)
-    const provider = ethers.getDefaultProvider(
-        "sepolia"
-    );
+    let production = false// process.env.NODE_ENV === 'production';
+    const provider = production ? new ethers.providers.JsonRpcProvider(process.env.RPC_URL) : ethers.providers.getDefaultProvider("sepolia");
 
     const privateKey = process.env.PRIVATE_KEY;
     if (!privateKey) {
@@ -101,10 +99,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     ]);
     const schemaUID = "0xf0146b763d066465cb2fa39a158ff83843875282abb607cb053c11cadc60fc4a";
 
+    let refereeAddress = interactor.verified_accounts[0];
+    if (!refereeAddress) {
+        return res.status(497).json({ error: 'Referee must connect wallet to the farcaster' });
+    }
+
     const tx = await eas.attest({
         schema: schemaUID,
         data: {
-            recipient: "0xFD50b031E778fAb33DfD2Fc3Ca66a1EeF0652165",
+            recipient: refereeAddress,
             expirationTime: BigInt(Date.now() + 100 * 60 * 60 * 24 * 365),
             revocable: true,
             data: encodedData,
@@ -114,6 +117,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const newAttestationUID = await tx.wait();
 
     console.log("New attestation UID:", newAttestationUID);
+
+    try {
+        await kv.hset(`match:${matchId}`, { attestationUID: newAttestationUID });
+    } catch {
+        return res.status(588).json({ error: 'Failed to save attestation' });
+    }
 
     return res.json(
         getFrameHtmlResponse({
