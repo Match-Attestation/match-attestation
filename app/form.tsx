@@ -202,7 +202,6 @@ export function MatchCreateForm() {
 }
 
 export function DecideMatchWinnerForm({ match }: { match: Match }) {
-  const baseUrl = window.location.host;
   return (
     <div className="mx-4 sm:mx-8 w-full">
       <div className="relative mt-6 sm:mt-8 mb-6">
@@ -212,7 +211,7 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
         <div className="text-left flex text-md">{match.referee}</div>
         <div className="flex-row items-center text-left text-xl font-bold mt-4">
           <img
-            src={"https://" + baseUrl + "/emojis/ninja.png"}
+            src="/emojis/ninja.png"
             width={"1.25rem"}
             height={"1.25rem"}
             style={{ marginRight: 6 }}
