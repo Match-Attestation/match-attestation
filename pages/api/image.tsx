@@ -77,7 +77,56 @@ export default async function handler(
             style={{
               display: "flex",
               flexDirection: "column",
+              fontSize: 24,
+              borderRadius: 20,
+              marginBottom: 20,
+              backgroundColor: "white",
+              padding: "12px 24px",
               width: "48.335%",
+
+              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <div
+              style={{ fontSize: 16, display: "flex", alignItems: "center" }}
+            >
+              <img
+                src="https://em-content.zobj.net/source/apple/354/ninja_1f977.png"
+                width={18}
+                height={18}
+                style={{ marginRight: 6 }}
+              />
+              <div>Participants</div>
+            </div>
+            {match.users.map((user, index) => (
+              <div
+                key={index}
+                style={{
+                  fontSize:
+                    match && match.users.length > 10
+                      ? match.users.length > 12
+                        ? match.users.length > 14
+                          ? 16
+                          : 18
+                        : 20
+                      : 24,
+                  marginTop: 2,
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  maxWidth: "100%",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {index + 1 + ". " + user}
+              </div>
+            ))}
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              width: "48.335%",
+              marginLeft: "3.333%",
             }}
           >
             <div
@@ -97,7 +146,7 @@ export default async function handler(
                 style={{ fontSize: 16, display: "flex", alignItems: "center" }}
               >
                 <img
-                  src="https://em-content.zobj.net/source/apple/354/trophy_1f3c6.png"
+                  src="@/public/emojis/trophy.png"
                   width={18}
                   height={18}
                   style={{ marginRight: 6 }}
@@ -166,55 +215,6 @@ export default async function handler(
                   .slice(5, 22) + " UTC"}
               </div>
             </div>
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              fontSize: 24,
-              borderRadius: 20,
-              marginBottom: 20,
-              backgroundColor: "white",
-              padding: "12px 24px",
-              width: "48.335%",
-              marginLeft: "3.333%",
-              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <div
-              style={{ fontSize: 16, display: "flex", alignItems: "center" }}
-            >
-              <img
-                src="https://em-content.zobj.net/source/apple/354/ninja_1f977.png"
-                width={18}
-                height={18}
-                style={{ marginRight: 6 }}
-              />
-              <div>Participants</div>
-            </div>
-            {match.users.map((user, index) => (
-              <div
-                key={index}
-                style={{
-                  fontSize:
-                    match && match.users.length > 10
-                      ? match.users.length > 12
-                        ? match.users.length > 14
-                          ? 16
-                          : 18
-                        : 20
-                      : 24,
-                  marginTop: 2,
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  maxWidth: "100%",
-                  textOverflow: "ellipsis",
-                }}
-              >
-                {index + 1 + ". " + user}
-              </div>
-            ))}
           </div>
         </div>
       </div>,
