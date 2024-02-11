@@ -30,7 +30,7 @@ export default async function handler(
     const likeAndRecastRequired = req.query["likeAndRecastRequired"];
     const refereeAttestationSuccess = req.query["refereeAttestationSuccess"];
     const interactorIsNotReferee = req.query["interactorIsNotReferee"];
-    const baseUrl = window.location.origin;
+    const baseUrl = req.headers.host;
 
     const svg = await satori(
       <div
