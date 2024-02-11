@@ -57,7 +57,7 @@ export default async function handler(
             backgroundColor: "#FFFFFF",
             padding: "12px 24px",
             width: "100%",
-            boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+            boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
           }}
         >
           <div style={{ fontSize: 16 }}>Match Title</div>
@@ -87,7 +87,7 @@ export default async function handler(
               padding: "12px 24px",
               width: "48.335%",
 
-              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+              boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
             }}
           >
             <div
@@ -142,7 +142,7 @@ export default async function handler(
                 backgroundColor: "#FFFFFF",
                 padding: "12px 24px",
                 width: "100%",
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
               }}
             >
               <div
@@ -172,7 +172,7 @@ export default async function handler(
                 backgroundColor: "#FFFFFF",
                 padding: "12px 24px",
                 width: "100%",
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
               }}
             >
               <div
@@ -198,7 +198,7 @@ export default async function handler(
                 backgroundColor: "#FFFFFF",
                 padding: "12px 24px",
                 width: "100%",
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
               }}
             >
               <div
@@ -230,7 +230,7 @@ export default async function handler(
               backgroundColor: "#FFFFFF",
               padding: "12px 24px",
               maxWidth: "100%",
-              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+              boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
               position: "absolute",
               top: 20,
               right: 20,
