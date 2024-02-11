@@ -4,7 +4,6 @@ import { Match, MATCH_EXPIRY } from "@/app/types";
 import { kv } from "@vercel/kv";
 import { ethers } from "ethers";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
-import { parse } from "uuid";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'POST') {
@@ -147,5 +146,5 @@ function uuidToBytes32(uuid: string): string {
         throw new Error("Invalid UUID format");
     }
 
-    return "0x" + cleanedUuid;
+    return cleanedUuid;
 }
