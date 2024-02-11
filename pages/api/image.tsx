@@ -38,7 +38,7 @@ export default async function handler(
           alignItems: "center",
           width: "100%",
           height: "100%",
-          backgroundColor: "#f9fafb",
+          backgroundColor: "white",
           padding: 20,
           lineHeight: 1.2,
           fontSize: 24,
