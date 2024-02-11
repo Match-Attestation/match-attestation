@@ -46,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         if (!match || match.attestationUID) {
             try {
-                await kv.hdel(`attestJob:${job.id}`);
+                await kv.del(`attestJob:${job.id}`);
             } catch {
                 console.error('Failed to delete attest job');
             }
@@ -68,7 +68,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             try {
                 await kv.hset(`match:${job.id}`, { attestationUID: newAttestationUID });
                 await kv.persist(`match:${job.id}`);
-                await kv.hdel(`attestJob:${job.id}`);
+                await kv.del(`attestJob:${job.id}`);
             } catch {
                 console.error('Failed to save attestation UID');
             }
