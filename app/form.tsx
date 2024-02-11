@@ -210,7 +210,7 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
         <div className="text-left flex text-xl">{match.title}</div>
         <div className="text-left text-xl font-bold mt-4">👩‍⚖️ Referee</div>
         <div className="text-left flex text-md">{match.referee}</div>
-        <div className="text-left text-xl font-bold mt-4">
+        <div className="flex-row items-center text-left text-xl font-bold mt-4">
           <img
             src={"https://" + baseUrl + "/emojis/ninja.png"}
             width={"1.25rem"}
