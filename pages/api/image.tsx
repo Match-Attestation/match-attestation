@@ -168,7 +168,7 @@ export default async function handler(
                 fontSize: 24,
                 borderRadius: 20,
                 marginBottom: 20,
-                backgroundColor: "white",
+                backgroundColor: "#f9fafb",
                 padding: "12px 24px",
                 width: "100%",
                 boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
