@@ -149,7 +149,7 @@ export default async function handler(
                 style={{ fontSize: 16, display: "flex", alignItems: "center" }}
               >
                 <img
-                  src="/emojis/trophy.png"
+                  src={window.location.origin + "/emojis/trophy.png"}
                   width={18}
                   height={18}
                   style={{ marginRight: 6 }}
