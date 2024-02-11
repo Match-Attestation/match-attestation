@@ -101,7 +101,13 @@ export function MatchCreateForm() {
             name="title"
           />
 
-          <div className="text-left text-xl font-bold mt-4">👩‍⚖️ Referee</div>
+          <div className="flex flex-row items-center text-left text-xl font-bold mt-4">
+            <img
+              src="/emojis/woman-judge.png"
+              style={{ marginRight: 6, width: "1.25rem", height: "1.25rem" }}
+            />
+            <div>Referee</div>
+          </div>
           <input
             aria-label="Match Referee"
             className="px-3 py-2 mt-1 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
@@ -111,8 +117,12 @@ export function MatchCreateForm() {
             type="text"
             name="referee"
           />
-          <div className="text-left text-xl font-bold mt-4">
-            🥷 Participants
+          <div className="flex flex-row items-center text-left text-xl font-bold mt-4">
+            <img
+              src="/emojis/ninja.png"
+              style={{ marginRight: 6, width: "1.25rem", height: "1.25rem" }}
+            />
+            <div>Participants</div>
           </div>
           {state.newMatch.users.map((user, index) => (
             <div
