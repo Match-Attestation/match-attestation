@@ -4,7 +4,7 @@ import { Match, MATCH_EXPIRY } from "@/app/types";
 import { kv } from "@vercel/kv";
 import { ethers } from "ethers";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
-import { uuid } from "uuid";
+import { parse } from "uuid";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'POST') {
@@ -93,7 +93,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Initialize SchemaEncoder with the schema string
     const schemaEncoder = new SchemaEncoder("bytes32 id,string title,string[] tags,uint64 referee,uint64[] players,uint64[] winners");
     const encodedData = schemaEncoder.encodeData([
-        { name: "id", value: uuid.parse(match.id), type: "bytes32" },
+        { name: "id", value: String(parse(match.id)), type: "bytes32" },
 	    { name: "title", value: match.title, type: "string" },
 	    { name: "tags", value: [], type: "string[]" },
 	    { name: "referee", value: match.referee, type: "uint64" },
