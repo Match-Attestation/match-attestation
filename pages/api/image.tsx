@@ -40,7 +40,7 @@ export default async function handler(
           alignItems: "center",
           width: "100%",
           height: "100%",
-          backgroundColor: "white",
+          backgroundColor: "#f9fafb",
           padding: 20,
           lineHeight: 1.2,
           fontSize: 24,
@@ -53,11 +53,10 @@ export default async function handler(
             flexDirection: "column",
             borderRadius: 20,
             marginBottom: 20,
-            backgroundColor: "white",
+            backgroundColor: "#FFFFFF",
             padding: "12px 24px",
             width: "100%",
-            boxShadow:
-              "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;",
+            boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
           }}
         >
           <div style={{ fontSize: 16 }}>Match Title</div>
@@ -83,12 +82,11 @@ export default async function handler(
               fontSize: 24,
               borderRadius: 20,
               marginBottom: 20,
-              backgroundColor: "white",
+              backgroundColor: "#FFFFFF",
               padding: "12px 24px",
               width: "48.335%",
 
-              boxShadow:
-                "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;",
+              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
             }}
           >
             <div
@@ -140,11 +138,10 @@ export default async function handler(
                 fontSize: 24,
                 borderRadius: 20,
                 marginBottom: 20,
-                backgroundColor: "white",
+                backgroundColor: "#FFFFFF",
                 padding: "12px 24px",
                 width: "100%",
-                boxShadow:
-                  "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
               }}
             >
               <div
@@ -171,11 +168,10 @@ export default async function handler(
                 fontSize: 24,
                 borderRadius: 20,
                 marginBottom: 20,
-                backgroundColor: "white",
+                backgroundColor: "#FFFFFF",
                 padding: "12px 24px",
                 width: "100%",
-                boxShadow:
-                  "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
               }}
             >
               <div
@@ -198,11 +194,10 @@ export default async function handler(
                 fontSize: 24,
                 borderRadius: 20,
                 marginBottom: 20,
-                backgroundColor: "white",
+                backgroundColor: "#FFFFFF",
                 padding: "12px 24px",
                 width: "100%",
-                boxShadow:
-                  "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
               }}
             >
               <div
