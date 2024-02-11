@@ -13,6 +13,7 @@ async function getMatch(id: string): Promise<Match> {
     users: [],
     winners: [],
     referee: "",
+    attestationUID: null,
   };
 
   try {
