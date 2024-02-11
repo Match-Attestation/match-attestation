@@ -54,7 +54,8 @@ export default async function handler(
             backgroundColor: "white",
             padding: "12px 24px",
             width: "100%",
-            boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+            boxShadow:
+              "box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;",
           }}
         >
           <div style={{ fontSize: 16 }}>Match Title</div>
@@ -84,7 +85,8 @@ export default async function handler(
               padding: "12px 24px",
               width: "48.335%",
 
-              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+              boxShadow:
+                "box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;",
             }}
           >
             <div
@@ -139,14 +141,15 @@ export default async function handler(
                 backgroundColor: "white",
                 padding: "12px 24px",
                 width: "100%",
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                boxShadow:
+                  "box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;",
               }}
             >
               <div
                 style={{ fontSize: 16, display: "flex", alignItems: "center" }}
               >
                 <img
-                  src="@/public/emojis/trophy.png"
+                  src="/public/emojis/trophy.png"
                   width={18}
                   height={18}
                   style={{ marginRight: 6 }}
@@ -169,7 +172,8 @@ export default async function handler(
                 backgroundColor: "white",
                 padding: "12px 24px",
                 width: "100%",
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                boxShadow:
+                  "box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;",
               }}
             >
               <div
@@ -195,7 +199,8 @@ export default async function handler(
                 backgroundColor: "white",
                 padding: "12px 24px",
                 width: "100%",
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                boxShadow:
+                  "box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;",
               }}
             >
               <div
