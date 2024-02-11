@@ -113,7 +113,17 @@ export default async function handler(
                 boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <div style={{ fontSize: 16 }}>Referee</div>
+              <div
+                style={{ fontSize: 16, display: "flex", alignItems: "center" }}
+              >
+                <img
+                  src="https://em-content.zobj.net/source/apple/354/woman-judge_1f469-200d-2696-fe0f.png"
+                  width={18}
+                  height={18}
+                  style={{ marginRight: 6 }}
+                />
+                <div>Referee</div>
+              </div>
               <div style={{ fontSize: 24, marginTop: 4 }}>{match.referee}</div>
             </div>
             <div
