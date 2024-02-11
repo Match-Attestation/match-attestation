@@ -28,7 +28,9 @@ export default async function handler(
 
     const attestationUID = req.query["attestationUID"];
     const likeAndRecastRequired = req.query["likeAndRecastRequired"];
+    const refereeAttestationSuccess = req.query["refereeAttestationSuccess"];
     const interactorIsNotReferee = req.query["interactorIsNotReferee"];
+    const baseUrl = window.location.origin;
 
     const svg = await satori(
       <div
@@ -149,7 +151,7 @@ export default async function handler(
                 style={{ fontSize: 16, display: "flex", alignItems: "center" }}
               >
                 <img
-                  src={window.location.origin + "/emojis/trophy.png"}
+                  src={baseUrl + "/emojis/trophy.png"}
                   width={18}
                   height={18}
                   style={{ marginRight: 6 }}
