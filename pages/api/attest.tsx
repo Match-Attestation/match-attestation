@@ -88,11 +88,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     eas.connect(signer as any);
 
-    const schemaUID = "0x062ddd7a7a5e572efd04583673e06fd9c7825308eddcafb95a5d13a809edeeae";
+    const schemaUID = "0x80c63c41b925dc2660e0788c8862833c72e3f9c0dcf9843f5fab4ede08f654b4";
     // Initialize SchemaEncoder with the schema string
-    const schemaEncoder = new SchemaEncoder("bytes32 id,string title,string[] tags,uint64 referee,uint64[] players,uint64[] winners");
+    const schemaEncoder = new SchemaEncoder("string id,string title,string[] tags,uint64 referee,uint64[] players,uint64[] winners");
     const encodedData = schemaEncoder.encodeData([
-        { name: "id", value: uuidToBytes32(match.id), type: "bytes32" },
+        { name: "id", value: match.id, type: "string" },
 	    { name: "title", value: match.title, type: "string" },
 	    { name: "tags", value: [], type: "string[]" },
 	    { name: "referee", value: match.referee, type: "uint64" },
@@ -136,15 +136,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } catch {
         return res.status(589).json({ error: 'Failed to attest' });
     }
-}
-
-function uuidToBytes32(uuid: string): string {
-    // Basic validation to check length after removing hyphens
-    // A UUID without hyphens should have exactly 32 characters
-    const cleanedUuid = uuid.replace(/-/g, "");
-    if (cleanedUuid.length !== 32) {
-        throw new Error("Invalid UUID format");
-    }
-
-    return cleanedUuid;
 }
