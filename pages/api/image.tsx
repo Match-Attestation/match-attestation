@@ -57,7 +57,7 @@ export default async function handler(
             boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
           }}
         >
-          <div style={{ fontSize: 16 }}>Title</div>
+          <div style={{ fontSize: 16 }}>Match Title</div>
           <div
             style={{
               fontSize: match.title.length > 80 ? 24 : 32,
