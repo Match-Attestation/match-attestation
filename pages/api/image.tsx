@@ -159,6 +159,7 @@ export default async function handler(
                 src="https://em-content.zobj.net/source/apple/354/ninja_1f977.png"
                 width={20}
                 height={20}
+                style={{ marginRight: 6 }}
               />
               Participants
             </div>
