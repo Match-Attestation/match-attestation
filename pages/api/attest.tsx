@@ -88,16 +88,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     eas.connect(signer as any);
 
-    const schemaUID = "0x80c63c41b925dc2660e0788c8862833c72e3f9c0dcf9843f5fab4ede08f654b4";
+    const schemaUID = "0xb790eba667e82b03fa40ddaa62f23d6fc3256cbe464b3b9baf4e2d1c9c31074b";
     // Initialize SchemaEncoder with the schema string
-    const schemaEncoder = new SchemaEncoder("string id,string title,string[] tags,uint64 referee,uint64[] players,uint64[] winners");
+    const schemaEncoder = new SchemaEncoder("string id,string title,string[] tags,string referee,string[] players,string[] winners");
     const encodedData = schemaEncoder.encodeData([
         { name: "id", value: match.id, type: "string" },
 	    { name: "title", value: match.title, type: "string" },
 	    { name: "tags", value: [], type: "string[]" },
-	    { name: "referee", value: match.referee, type: "uint64" },
-	    { name: "players", value: match.users, type: "uint64[]" },
-	    { name: "winners", value: match.winners, type: "uint64[]" },
+	    { name: "referee", value: match.referee, type: "string" },
+	    { name: "players", value: match.users, type: "string[]" },
+	    { name: "winners", value: match.winners, type: "string[]" },
     ]);
 
 
