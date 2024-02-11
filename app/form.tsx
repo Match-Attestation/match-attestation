@@ -210,12 +210,10 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
         <div className="text-left flex text-xl">{match.title}</div>
         <div className="text-left text-xl font-bold mt-4">👩‍⚖️ Referee</div>
         <div className="text-left flex text-md">{match.referee}</div>
-        <div className="flex-row items-center text-left text-xl font-bold mt-4">
+        <div className="flex flex-row items-center text-left text-xl font-bold mt-4">
           <img
             src="/emojis/ninja.png"
-            width={"1.25rem"}
-            height={"1.25rem"}
-            style={{ marginRight: 6 }}
+            style={{ marginRight: 6, width: "1.25rem", height: "1.25rem" }}
           />
           <div>Participants</div>
         </div>
