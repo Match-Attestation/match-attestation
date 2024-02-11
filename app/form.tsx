@@ -202,6 +202,7 @@ export function MatchCreateForm() {
 }
 
 export function DecideMatchWinnerForm({ match }: { match: Match }) {
+  const baseUrl = window.location.host;
   return (
     <div className="mx-4 sm:mx-8 w-full">
       <div className="relative mt-6 sm:mt-8 mb-6">
@@ -209,7 +210,15 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
         <div className="text-left flex text-xl">{match.title}</div>
         <div className="text-left text-xl font-bold mt-4">👩‍⚖️ Referee</div>
         <div className="text-left flex text-md">{match.referee}</div>
-        <div className="text-left text-xl font-bold mt-4">🥷 Participants</div>
+        <div className="text-left text-xl font-bold mt-4">
+          <img
+            src={"https://" + baseUrl + "/emojis/ninja.png"}
+            width={"1.25rem"}
+            height={"1.25rem"}
+            style={{ marginRight: 6 }}
+          />
+          <div>Participants</div>
+        </div>
         <div className="text-left flex flex-col text-md">
           {match.users.map((user, index) => (
             <div key={index}>{index + 1 + ". " + user}</div>
