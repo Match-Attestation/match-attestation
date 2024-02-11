@@ -93,7 +93,17 @@ export default async function handler(
                 boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <div style={{ fontSize: 16 }}>Winners</div>
+              <div
+                style={{ fontSize: 16, display: "flex", alignItems: "center" }}
+              >
+                <img
+                  src="https://em-content.zobj.net/source/apple/354/trophy_1f3c6.png"
+                  width={18}
+                  height={18}
+                  style={{ marginRight: 6 }}
+                />
+                <div>Winners</div>
+              </div>
               <div style={{ fontSize: 24, marginTop: 4 }}>
                 {match.winners.length > 0
                   ? match.winners.join(", ")
@@ -139,7 +149,17 @@ export default async function handler(
                 boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <div style={{ fontSize: 16 }}>Expires</div>
+              <div
+                style={{ fontSize: 16, display: "flex", alignItems: "center" }}
+              >
+                <img
+                  src="https://em-content.zobj.net/source/apple/354/stopwatch_23f1-fe0f.png"
+                  width={18}
+                  height={18}
+                  style={{ marginRight: 6 }}
+                />
+                <div>Expires</div>
+              </div>
               <div style={{ fontSize: 20, marginTop: 4 }}>
                 {new Date(Number(match.created_at) + MATCH_EXPIRY)
                   .toUTCString()
