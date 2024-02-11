@@ -45,8 +45,38 @@ export default async function handler(
           lineHeight: 1.2,
           fontSize: 24,
           color: "black",
+          position: "relative",
         }}
       >
+        {interactorIsNotReferee && (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              borderRadius: 20,
+              marginBottom: 20,
+              backgroundColor: "#FFFFFF",
+              padding: "12px 24px",
+              width: "fit-content",
+              height: "fit-content",
+              maxWidth: "100%",
+              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+              position: "absolute",
+              top: 20,
+              right: 20,
+            }}
+          >
+            <div style={{ fontSize: 16 }}>Match Title</div>
+            <div
+              style={{
+                fontSize: match.title.length > 80 ? 24 : 32,
+                marginTop: 2,
+              }}
+            >
+              You are not referee! Only referee can attest the match
+            </div>
+          </div>
+        )}
         <div
           style={{
             display: "flex",
