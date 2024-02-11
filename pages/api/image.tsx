@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import sharp from "sharp";
-import { Match } from "@/app/types";
+import { MATCH_EXPIRY, Match } from "@/app/types";
 import { kv } from "@vercel/kv";
 import satori from "satori";
 import { join } from "path";
@@ -28,70 +28,225 @@ export default async function handler(
 
     const attestationUID = req.query["attestationUID"];
     const likeAndRecastRequired = req.query["likeAndRecastRequired"];
+    const refereeAttestationSuccess = req.query["refereeAttestationSuccess"];
     const interactorIsNotReferee = req.query["interactorIsNotReferee"];
+    const baseUrl = req.headers.host;
 
     const svg = await satori(
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
           alignItems: "center",
           width: "100%",
           height: "100%",
-          backgroundColor: "#f4f4f4",
-          padding: 12,
+          backgroundColor: "#f9fafb",
+          padding: 20,
           lineHeight: 1.2,
           fontSize: 24,
-          color: "lightgray",
+          color: "black",
+          position: "relative",
         }}
       >
         <div
           style={{
-            fontSize: 32,
-            fontWeight: "bold",
-            color: "black",
+            display: "flex",
+            flexDirection: "column",
+            borderRadius: 20,
             marginBottom: 20,
+            backgroundColor: "#FFFFFF",
+            padding: "12px 24px",
+            width: "100%",
+            boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
           }}
         >
-          Match Details
+          <div style={{ fontSize: 16 }}>Match Title</div>
+          <div
+            style={{
+              fontSize: match.title.length > 80 ? 24 : 32,
+              marginTop: 2,
+            }}
+          >
+            {match.title}
+          </div>
         </div>
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
-            backgroundColor: "white",
-            padding: "20px 24px",
-            borderRadius: "10px",
-            color: "black",
-            maxWidth: "90%",
+            width: "100%",
           }}
         >
-          <div style={{ fontSize: 20, marginBottom: 4 }}>Title</div>
-          <div style={{ fontSize: 24, marginBottom: 12 }}>{match.title}</div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              fontSize: 24,
+              borderRadius: 20,
+              marginBottom: 20,
+              backgroundColor: "#FFFFFF",
+              padding: "12px 24px",
+              width: "48.335%",
 
-          <div style={{ fontSize: 20, marginBottom: 4 }}>Referee:</div>
-          <div style={{ fontSize: 24, marginBottom: 12 }}>{match.referee}</div>
-
-          <div style={{ fontSize: 20, marginBottom: 4 }}>Participants:</div>
-          {match.users.map((user, index) => (
-            <div key={index} style={{ fontSize: 24, marginBottom: 12 }}>
-              {index + 1 + ". " + user}
+              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <div
+              style={{ fontSize: 16, display: "flex", alignItems: "center" }}
+            >
+              <img
+                src={"https://" + baseUrl + "/emojis/ninja.png"}
+                width={18}
+                height={18}
+                style={{ marginRight: 6 }}
+              />
+              <div>Participants</div>
             </div>
-          ))}
-
-          <div style={{ fontSize: 20, marginBottom: 4 }}>Winners:</div>
-          <div style={{ fontSize: 24, marginBottom: 12 }}>
-            {match.winners.length > 0
-              ? match.winners.join(", ")
-              : "No winners yet..."}
+            {match.users.map((user, index) => (
+              <div
+                key={index}
+                style={{
+                  fontSize:
+                    match && match.users.length > 10
+                      ? match.users.length > 12
+                        ? match.users.length > 14
+                          ? 16
+                          : 18
+                        : 20
+                      : 24,
+                  marginTop: 2,
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  maxWidth: "100%",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {index + 1 + ". " + user}
+              </div>
+            ))}
           </div>
-
-          <div style={{ fontSize: 20, marginBottom: 4 }}>Start Date:</div>
-          <div style={{ fontSize: 24, marginBottom: 12 }}>
-            {new Date(Number(match.created_at)).toLocaleString()}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              width: "48.335%",
+              marginLeft: "3.333%",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                fontSize: 24,
+                borderRadius: 20,
+                marginBottom: 20,
+                backgroundColor: "#FFFFFF",
+                padding: "12px 24px",
+                width: "100%",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <div
+                style={{ fontSize: 16, display: "flex", alignItems: "center" }}
+              >
+                <img
+                  src={"https://" + baseUrl + "/emojis/trophy.png"}
+                  width={18}
+                  height={18}
+                  style={{ marginRight: 6 }}
+                />
+                <div>Winners</div>
+              </div>
+              <div style={{ fontSize: 24, marginTop: 4 }}>
+                {match.winners.length > 0
+                  ? match.winners.join(", ")
+                  : "No winners yet..."}
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                fontSize: 24,
+                borderRadius: 20,
+                marginBottom: 20,
+                backgroundColor: "#FFFFFF",
+                padding: "12px 24px",
+                width: "100%",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <div
+                style={{ fontSize: 16, display: "flex", alignItems: "center" }}
+              >
+                <img
+                  src={"https://" + baseUrl + "/emojis/woman-judge.png"}
+                  width={18}
+                  height={18}
+                  style={{ marginRight: 6 }}
+                />
+                <div>Referee</div>
+              </div>
+              <div style={{ fontSize: 24, marginTop: 2 }}>{match.referee}</div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                fontSize: 24,
+                borderRadius: 20,
+                marginBottom: 20,
+                backgroundColor: "#FFFFFF",
+                padding: "12px 24px",
+                width: "100%",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <div
+                style={{ fontSize: 16, display: "flex", alignItems: "center" }}
+              >
+                <img
+                  src={"https://" + baseUrl + "/emojis/stopwatch.png"}
+                  width={18}
+                  height={18}
+                  style={{ marginRight: 6 }}
+                />
+                <div>Expires</div>
+              </div>
+              <div style={{ fontSize: 20, marginTop: 4 }}>
+                {new Date(Number(match.created_at) + MATCH_EXPIRY)
+                  .toUTCString()
+                  .slice(5, 22) + " UTC"}
+              </div>
+            </div>
           </div>
         </div>
+        {interactorIsNotReferee && (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              borderRadius: 20,
+              marginBottom: 20,
+              backgroundColor: "#FFFFFF",
+              padding: "12px 24px",
+              maxWidth: "100%",
+              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+              position: "absolute",
+              top: 20,
+              right: 20,
+            }}
+          >
+            <div style={{ fontSize: 16 }}>Match Title</div>
+            <div
+              style={{
+                fontSize: match.title.length > 80 ? 24 : 32,
+                marginTop: 2,
+              }}
+            >
+              You are not referee! Only referee can attest the match
+            </div>
+          </div>
+        )}
       </div>,
       {
         width: 600,
