@@ -23,6 +23,7 @@ export function MatchCreateForm() {
     users: ["", ""],
     winners: [],
     referee: "",
+    attestationUID: null,
   };
 
   const [state, setState] = useState<MatchState>({
