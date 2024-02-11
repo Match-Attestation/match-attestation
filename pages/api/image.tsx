@@ -157,8 +157,8 @@ export default async function handler(
             >
               <img
                 src="https://em-content.zobj.net/source/apple/354/ninja_1f977.png"
-                width={16}
-                height={16}
+                width={20}
+                height={20}
               />
               Participants
             </div>
