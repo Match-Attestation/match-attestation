@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         attestJobKeys.map(async (key) => {
             return await kv.hgetall(key);
         })
-    )).filter(job => job !== null) as AttestationJob[];
+    )).flatMap((job) => { return job as AttestationJob });
 
     const EASContractAddress = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e"; // Sepolia v0.26
 
@@ -48,7 +48,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             try {
                 await kv.hdel(`attestJob:${job.id}`);
             } catch {
-                console.error('Failed to save attestation UID');
+                console.error('Failed to delete attest job');
             }
             return;
         }
