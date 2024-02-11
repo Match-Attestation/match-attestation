@@ -48,7 +48,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             try {
                 await kv.hdel(`attestJob:${job.id}`);
             } catch {
-                console.error('Failed to save attestation UID');
+                console.error('Failed to delete attest job');
             }
             return;
         }
@@ -67,18 +67,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             try {
                 await kv.hset(`match:${job.id}`, { attestationUID: newAttestationUID });
-            } catch {
-                console.error('Failed to save attestation UID');
-            }
-            try {
+                await kv.persist(`match:${job.id}`);
                 await kv.hdel(`attestJob:${job.id}`);
             } catch {
-                console.error('Failed to delete attest job');
-            }
-            try {
-                await kv.expire(`match:${job.id}`, MATCH_EXPIRY);
-            } catch {
-                console.error('Failed to set match expiry');
+                console.error('Failed to save attestation UID');
             }
         } catch {
             console.error('Failed to attest');
