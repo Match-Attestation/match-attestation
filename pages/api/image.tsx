@@ -57,8 +57,6 @@ export default async function handler(
               marginBottom: 20,
               backgroundColor: "#FFFFFF",
               padding: "12px 24px",
-              width: "fit-content",
-              height: "fit-content",
               maxWidth: "100%",
               boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
               position: "absolute",
