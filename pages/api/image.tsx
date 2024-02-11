@@ -38,7 +38,7 @@ export default async function handler(
           alignItems: "center",
           width: "100%",
           height: "100%",
-          backgroundColor: "#f9fafb",
+          backgroundColor: "white",
           padding: 20,
           lineHeight: 1.2,
           fontSize: 24,
@@ -149,7 +149,7 @@ export default async function handler(
                 style={{ fontSize: 16, display: "flex", alignItems: "center" }}
               >
                 <img
-                  src="/emojis/trophy.png"
+                  src={window.location.origin + "/emojis/trophy.png"}
                   width={18}
                   height={18}
                   style={{ marginRight: 6 }}
