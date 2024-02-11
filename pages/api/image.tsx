@@ -157,11 +157,11 @@ export default async function handler(
             >
               <img
                 src="https://em-content.zobj.net/source/apple/354/ninja_1f977.png"
-                width={20}
-                height={20}
+                width={18}
+                height={18}
                 style={{ marginRight: 6 }}
               />
-              Participants
+              <div>Participants</div>
             </div>
             {match.users.map((user, index) => (
               <div
@@ -175,7 +175,7 @@ export default async function handler(
                           : 18
                         : 20
                       : 24,
-                  marginTop: 4,
+                  marginTop: 2,
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   maxWidth: "100%",
