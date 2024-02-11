@@ -51,7 +51,7 @@ export async function generateMetadata(
     input: {
       text: "Comma separated list of winners",
     },
-    postUrl: `${process.env["HOST"]}/api/attest?id=${id}`,
+    postUrl: `${process.env["HOST"]}/api/submit?id=${id}`,
   });
 
   return {
