@@ -53,28 +53,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return;
         }
 
-        try {
-            const tx = await eas.attest({
-                schema: schemaUID,
-                data: {
-                    recipient: job.referee,
-                    revocable: true,
-                    data: job.encodedData,
-                },
-            });
+        const tx = await eas.attest({
+            schema: schemaUID,
+            data: {
+                recipient: job.referee,
+                revocable: true,
+                data: job.encodedData,
+            },
+        });
 
-            const newAttestationUID = await tx.wait();
+        const newAttestationUID = await tx.wait();
 
-            try {
-                await kv.hset(`match:${job.id}`, { attestationUID: newAttestationUID });
-                await kv.persist(`match:${job.id}`);
-                await kv.del(`attestJob:${job.id}`);
-            } catch {
-                console.error('Failed to save attestation UID');
-            }
-        } catch {
-            console.error('Failed to attest');
-        }
+        await kv.hset(`match:${job.id}`, { attestationUID: newAttestationUID });
+        await kv.persist(`match:${job.id}`);
+        await kv.del(`attestJob:${job.id}`);
     })).then(() => {
         res.status(200).json({ message: "Jobs finished" });
     }).catch(() => {
