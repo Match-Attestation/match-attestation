@@ -77,5 +77,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
     })).then(() => {
         res.status(200).json({ message: "Jobs finished" });
+    }).catch(() => {
+        res.status(500).json({ message: "Failed to finish jobs" });
     });
 }
