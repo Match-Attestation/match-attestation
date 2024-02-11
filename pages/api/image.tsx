@@ -57,7 +57,7 @@ export default async function handler(
             padding: "12px 24px",
             width: "100%",
             boxShadow:
-              "box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;",
+              "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;",
           }}
         >
           <div style={{ fontSize: 16 }}>Match Title</div>
@@ -88,7 +88,7 @@ export default async function handler(
               width: "48.335%",
 
               boxShadow:
-                "box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;",
+                "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;",
             }}
           >
             <div
@@ -144,7 +144,7 @@ export default async function handler(
                 padding: "12px 24px",
                 width: "100%",
                 boxShadow:
-                  "box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;",
+                  "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;",
               }}
             >
               <div
@@ -175,7 +175,7 @@ export default async function handler(
                 padding: "12px 24px",
                 width: "100%",
                 boxShadow:
-                  "box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;",
+                  "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;",
               }}
             >
               <div
@@ -202,7 +202,7 @@ export default async function handler(
                 padding: "12px 24px",
                 width: "100%",
                 boxShadow:
-                  "box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;",
+                  "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;",
               }}
             >
               <div
