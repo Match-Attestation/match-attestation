@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const attestJobKeys = await kv.keys("attestJob:*");
 
     if (!attestJobKeys.length) {
-        return res.status(200).json({ message: "No attest jobs" });
+        return res.status(299).json({ message: "No attest jobs" });
     }
 
     const attestJobs = (await Promise.all(
