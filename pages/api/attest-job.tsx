@@ -72,6 +72,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(200).json({ message: "Finished jobs" });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Failed to finish jobs" });
+        res.status(500).json({ message: "Failed to finish jobs", error });
     }
 }
