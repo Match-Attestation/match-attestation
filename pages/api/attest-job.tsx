@@ -37,12 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const schemaUID = "0xb790eba667e82b03fa40ddaa62f23d6fc3256cbe464b3b9baf4e2d1c9c31074b";
 
     Promise.all(attestJobs.map(async (job) => {
-        let match: Match | null = null;
-        try {
-            match = await kv.hgetall(`match:${job.id}`);
-        } catch (error) {
-            console.error('Failed to retrieve match');
-        }
+        let match = await kv.hgetall(`match:${job.id}`);
 
         if (!match || match.attestationUID) {
             try {
