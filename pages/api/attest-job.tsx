@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const attestJobKeys = await kv.keys("attestJob:*");
 
     if (!attestJobKeys.length) {
-        return res.status(299).json({ message: "No attest jobs" });
+        return res.status(200).json({ message: "No attest jobs" });
     }
 
     const attestJobs = (await Promise.all(
@@ -64,13 +64,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
             const newAttestationUID = await tx.wait();
     
-            await kv.hset(`match:${job.id}`, { attestationUID: newAttestationUID });
-            await kv.persist(`match:${job.id}`);
-            await kv.del(`attestJob:${job.id}`);
+            await kv.hset(`match:${match.id}`, { attestationUID: newAttestationUID });
+            await kv.persist(`match:${match.id}`);
+            await kv.del(`attestJob:${match.id}`);
         }));
 
-        let jobIds = attestJobs.map((job) => job.id);
-        res.status(200).json({ message: "Finished jobs", jobIds });
+        res.status(200).json({ message: "Finished jobs" });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Failed to finish jobs" });

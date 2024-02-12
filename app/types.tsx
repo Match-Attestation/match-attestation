@@ -11,7 +11,6 @@ export type Match = {
 export const MATCH_EXPIRY = 60 * 60 * 24 * 180; // Expire match after 3 months
 
 export type AttestationJob = {
-  id: string;
   encodedData: string;
   referee: string;
 };
