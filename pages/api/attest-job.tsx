@@ -23,11 +23,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Initialize the sdk with the address of the EAS Schema contract address
     const eas = new EAS(EASContractAddress);
 
-    const rpcUrl = process.env.RPC_URL;
-    if (!rpcUrl) {
-        throw new Error('RPC URL is missing');
+    const alchemyKey = process.env.ALCHEMY_API_KEY;
+    if (!alchemyKey) {
+        throw new Error('Alchemy key is missing');
     }
-    const provider = new ethers.JsonRpcProvider(rpcUrl);
+    const network = "sepolia";
+    const provider = new ethers.AlchemyProvider(network, alchemyKey);
 
     const privateKey = process.env.PRIVATE_KEY;
     if (!privateKey) {
@@ -72,6 +73,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(200).json({ message: "Finished jobs" });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Failed to finish jobs", error });
+        res.status(500).json({ message: "Failed to finish jobs" });
     }
 }
