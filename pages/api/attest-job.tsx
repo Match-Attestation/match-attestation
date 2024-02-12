@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // get all attest jobs from the KV
     const attestJobKeys = await kv.keys("attestJob:*");
 
-    if (!attestJobKeys) {
+    if (!attestJobKeys.length) {
         return res.status(200).json({ message: "No attest jobs" });
     }
 
@@ -23,7 +23,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Initialize the sdk with the address of the EAS Schema contract address
     const eas = new EAS(EASContractAddress);
 
-    const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
+    const rpcUrl = process.env.RPC_URL;
+    if (!rpcUrl) {
+        throw new Error('RPC URL is missing');
+    }
+    const provider = new ethers.JsonRpcProvider(rpcUrl);
 
     const privateKey = process.env.PRIVATE_KEY;
     if (!privateKey) {
@@ -32,39 +36,42 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const signer: ethers.Signer = new ethers.Wallet(privateKey, provider);
 
-    eas.connect(signer as any);
+    eas.connect(signer);
 
     const schemaUID = "0xb790eba667e82b03fa40ddaa62f23d6fc3256cbe464b3b9baf4e2d1c9c31074b";
 
-    Promise.all(attestJobs.map(async (job) => {
-        let match: Match | null = await kv.hgetall(`match:${job.id}`);
-
-        if (!match || match.attestationUID) {
-            try {
-                await kv.del(`attestJob:${job.id}`);
-            } catch {
-                console.error('Failed to delete attest job');
+    try {
+        await Promise.all(attestJobs.map(async (job) => {
+            let match: Match | null = await kv.hgetall(`match:${job.id}`);
+    
+            if (!match || match.attestationUID) {
+                try {
+                    await kv.del(`attestJob:${job.id}`);
+                } catch {
+                    console.error('Failed to delete attest job');
+                }
+                return;
             }
-            return;
-        }
+    
+            const tx = await eas.attest({
+                schema: schemaUID,
+                data: {
+                    recipient: job.referee,
+                    revocable: true,
+                    data: job.encodedData,
+                },
+            });
+    
+            const newAttestationUID = await tx.wait();
+    
+            await kv.hset(`match:${job.id}`, { attestationUID: newAttestationUID });
+            await kv.persist(`match:${job.id}`);
+            await kv.del(`attestJob:${job.id}`);
+        }));
 
-        const tx = await eas.attest({
-            schema: schemaUID,
-            data: {
-                recipient: job.referee,
-                revocable: true,
-                data: job.encodedData,
-            },
-        });
-
-        const newAttestationUID = await tx.wait();
-
-        await kv.hset(`match:${job.id}`, { attestationUID: newAttestationUID });
-        await kv.persist(`match:${job.id}`);
-        await kv.del(`attestJob:${job.id}`);
-    })).then(() => {
         res.status(200).json({ message: "Jobs finished" });
-    }).catch(() => {
+    } catch (error) {
+        console.error(error);
         res.status(500).json({ message: "Failed to finish jobs" });
-    });
+    }
 }
