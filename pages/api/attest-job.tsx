@@ -64,9 +64,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
             const newAttestationUID = await tx.wait();
     
-            await kv.hset(`match:${match.id}`, { attestationUID: newAttestationUID });
-            await kv.persist(`match:${match.id}`);
-            await kv.del(`attestJob:${match.id}`);
+            await kv.hset(`match:${job.id}`, { attestationUID: newAttestationUID });
+            await kv.persist(`match:${job.id}`);
+            await kv.del(`attestJob:${job.id}`);
         }));
 
         res.status(200).json({ message: "Finished jobs" });
