@@ -82,7 +82,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     ]);
 
     try {
-        await kv.hset(`attestJob:${matchId}`, { data: encodedData, referee: refereeAddress });
+        await kv.hset(`attestJob:${matchId}`, { id: matchId, data: encodedData, referee: refereeAddress });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: 'Failed to save attestation' });
