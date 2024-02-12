@@ -2,7 +2,6 @@
     "crons": [
       {
         "path": "/api/attest-job",
-        "method": "POST",
         "schedule": "*/5 * * * *"
       }
     ]
