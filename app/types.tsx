@@ -1,8 +1,13 @@
+export type UserProfile = {
+  display_name: string;
+  fid: string;
+  pfp_url: string;
+};
 export type Match = {
   id: string;
   title: string;
   created_at: number;
-  users: Array<string>;
+  users: Array<UserProfile | null>;
   winners: Array<string>;
   referee: string;
 };

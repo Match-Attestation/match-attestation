@@ -1,11 +1,11 @@
 "use client";
 
 import clsx from "clsx";
-import { useOptimistic, useRef, useState, useTransition } from "react";
+import { useRef, useState } from "react";
 import { saveMatch } from "./actions";
 import { v4 as uuidv4 } from "uuid";
-import { Match } from "./types";
-import LiveSearch from "./selector";
+import { Match, UserProfile } from "./types";
+import FarcasterUserSelector from "./FarcasterUserSelector";
 import Link from "next/link";
 
 type MatchState = {
@@ -13,21 +13,6 @@ type MatchState = {
   pending: boolean;
   maxUsersCount: number;
 };
-//
-const profiles = [
-  { id: "1", name: "Allie Grater" },
-  { id: "2", name: "Aida Bugg" },
-  { id: "3", name: "Gabrielle" },
-  { id: "4", name: "Grace" },
-  { id: "5", name: "Hannah" },
-  { id: "6", name: "Heather" },
-  { id: "7", name: "John Doe" },
-  { id: "8", name: "Anne Teak" },
-  { id: "9", name: "Audie Yose" },
-  { id: "10", name: "Addie Minstra" },
-  { id: "11", name: "Anne Ortha" },
-];
-//
 
 export function MatchCreateForm() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -36,7 +21,7 @@ export function MatchCreateForm() {
     id: uuidv4(),
     created_at: new Date().getTime(),
     title: "",
-    users: ["", ""],
+    users: [null, null],
     winners: [],
     referee: "",
   };
@@ -47,27 +32,9 @@ export function MatchCreateForm() {
     maxUsersCount: 20,
   });
 
-  //
-  const [results, setResults] = useState<{ id: string; name: string }[]>();
-  const [selectedProfile, setSelectedProfile] = useState<{
-    id: string;
-    name: string;
-  }>();
-
-  type changeHandler = React.ChangeEventHandler<HTMLInputElement>;
-  const handleChange: changeHandler = (e) => {
-    const { target } = e;
-    if (!target.value.trim()) return setResults([]);
-
-    const filteredValue = profiles.filter((profile) =>
-      profile.name.toLowerCase().startsWith(target.value.toLowerCase())
-    );
-    setResults(filteredValue);
-  };
-  //
-  const handleUserChange = (index: number, value: string) => {
+  const handleUserChange = (index: number, newUser: UserProfile) => {
     const users = [...state.newMatch.users];
-    users[index] = value;
+    users[index] = newUser;
     setState((prevState) => ({
       ...prevState,
       newMatch: {
@@ -82,7 +49,7 @@ export function MatchCreateForm() {
       ...prevState,
       newMatch: {
         ...prevState.newMatch,
-        users: [...prevState.newMatch.users, ""],
+        users: [...prevState.newMatch.users, null as any],
       },
     }));
   };
@@ -145,37 +112,19 @@ export function MatchCreateForm() {
             type="text"
             name="referee"
           />
-          {/*  */}
-          <LiveSearch
-            results={results}
-            value={selectedProfile?.name}
-            renderItem={(item) => <p>{item.name}</p>}
-            onChange={handleChange}
-            onSelect={(item) => setSelectedProfile(item)}
-          />
-          {/*  */}
 
           <div className="text-left text-xl font-bold mt-4">Participants</div>
           {state.newMatch.users.map((user, index) => (
-            <div
-              className={`flex items-center space-x-2 ${
-                index == 0 ? "mt-1" : "mt-2"
-              }`}
-            >
-              <input
-                key={index}
-                value={user}
-                onChange={(e) => handleUserChange(index, e.target.value)}
-                required
-                className="flex px-3 py-2 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
-                placeholder={`Participant №${index + 1}`}
-                aria-label={`Participant №${index + 1}`}
-                type="text"
-                maxLength={150}
-              />
+            <div className="flex flex-row flex-nowrap mt-1" key={index}>
+              <div className="grow">
+                <FarcasterUserSelector
+                  value={user}
+                  onSelect={(event) => handleUserChange(index, event as any)}
+                />
+              </div>
               {state.newMatch.users.length > 2 && (
                 <button
-                  className={`flex items-center justify-center text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700 ${
+                  className={`ml-1 flex items-center justify-center text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700 ${
                     state.pending
                       ? "bg-gray-500 hover:bg-gray-600 cursor-not-allowed"
                       : ""
@@ -254,7 +203,7 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
         <div className="text-left text-xl font-bold mt-4">Participants</div>
         <div className="text-left flex flex-col text-md">
           {match.users.map((user, index) => (
-            <div key={index}>{index + 1 + ". " + user}</div>
+            <FarcasterUserSelector key={index} value={user} />
           ))}
         </div>
         <div className="text-left text-xl font-bold mt-4">Winners</div>
