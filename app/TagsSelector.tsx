@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import CreatableSelect from "react-select/creatable";
 import makeAnimated from "react-select/animated";
+import { Tag } from "./types";
 
 interface Props {
-  onSelect?: (items: string[]) => void;
-  value?: string[] | null;
+  onSelect?: (items: Tag[]) => void;
+  value?: Tag[] | null;
 }
 
 const TagsSelector: React.FC<Props> = ({ value, onSelect }) => {
