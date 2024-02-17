@@ -3,11 +3,16 @@ export type UserProfile = {
   fid: string;
   pfp_url: string;
 };
+export type Tag = {
+  value: string;
+  label: string;
+};
 export type Match = {
   id: string;
   title: string;
   created_at: number;
   users: Array<UserProfile | null>;
+  tags: Array<Tag>;
   winners: Array<string>;
   referee: string;
   attestationUID: string | null;
@@ -20,4 +25,3 @@ export type AttestationJob = {
   encodedData: string;
   referee: string;
 };
-

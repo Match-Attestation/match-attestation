@@ -5,8 +5,10 @@ import { useRef, useState } from "react";
 import { saveMatch } from "./actions";
 import { v4 as uuidv4 } from "uuid";
 import FarcasterUserSelector from "./FarcasterUserSelector";
+import TagsSelector from "./TagsSelector";
 import { MATCH_EXPIRY, Match, UserProfile } from "./types";
 import Link from "next/link";
+import { Tag } from "./types";
 
 type MatchState = {
   newMatch: Match;
@@ -22,6 +24,7 @@ export function MatchCreateForm() {
     created_at: new Date().getTime(),
     title: "",
     users: [null, null],
+    tags: [],
     winners: [],
     referee: "",
     attestationUID: null,
@@ -32,6 +35,16 @@ export function MatchCreateForm() {
     pending: false,
     maxUsersCount: 16,
   });
+
+  const handleTagsChange = (tags: Tag[]) => {
+    setState((prevState) => ({
+      ...prevState,
+      newMatch: {
+        ...prevState.newMatch,
+        tags: tags,
+      },
+    }));
+  };
 
   const handleUserChange = (index: number, newUser: UserProfile) => {
     const users = [...state.newMatch.users];
@@ -104,9 +117,32 @@ export function MatchCreateForm() {
           />
 
           <div className="flex flex-row items-center text-left text-xl font-bold mt-4">
+            <div
+              style={{
+                marginRight: "0.375rem",
+              }}
+            >
+              💠
+            </div>
+            <div>Tags</div>
+          </div>
+          <div className="flex flex-row mt-1">
+            <div className="grow">
+              <TagsSelector
+                value={state.newMatch.tags}
+                onSelect={(event) => handleTagsChange(event)}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-row items-center text-left text-xl font-bold mt-4">
             <img
               src="/emojis/woman-judge.png"
-              style={{ marginRight: 6, width: "1.25rem", height: "1.25rem" }}
+              style={{
+                marginRight: "0.375rem",
+                width: "1.25rem",
+                height: "1.25rem",
+              }}
             />
             <div>Referee</div>
           </div>
@@ -123,7 +159,11 @@ export function MatchCreateForm() {
           <div className="flex flex-row items-center text-left text-xl font-bold mt-4">
             <img
               src="/emojis/ninja.png"
-              style={{ marginRight: 6, width: "1.25rem", height: "1.25rem" }}
+              style={{
+                marginRight: "0.375rem",
+                width: "1.25rem",
+                height: "1.25rem",
+              }}
             />
             <div>Participants</div>
           </div>
@@ -214,7 +254,11 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
         <div className="flex flex-row items-center text-left text-xl font-bold mt-4">
           <img
             src="/emojis/woman-judge.png"
-            style={{ marginRight: 6, width: "1.25rem", height: "1.25rem" }}
+            style={{
+              marginRight: "0.375rem",
+              width: "1.25rem",
+              height: "1.25rem",
+            }}
           />
           <div>Referee</div>
         </div>
@@ -222,7 +266,11 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
         <div className="flex flex-row items-center text-left text-xl font-bold mt-4">
           <img
             src="/emojis/ninja.png"
-            style={{ marginRight: 6, width: "1.25rem", height: "1.25rem" }}
+            style={{
+              marginRight: "0.375rem",
+              width: "1.25rem",
+              height: "1.25rem",
+            }}
           />
           <div>Participants</div>
         </div>
@@ -234,7 +282,11 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
         <div className="flex flex-row items-center text-left text-xl font-bold mt-4">
           <img
             src="/emojis/trophy.png"
-            style={{ marginRight: 6, width: "1.25rem", height: "1.25rem" }}
+            style={{
+              marginRight: "0.375rem",
+              width: "1.25rem",
+              height: "1.25rem",
+            }}
           />
           <div>Winners</div>
         </div>
@@ -246,7 +298,11 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
         <div className="flex flex-row items-center text-left text-xl font-bold mt-4">
           <img
             src="/emojis/stopwatch.png"
-            style={{ marginRight: 6, width: "1.25rem", height: "1.25rem" }}
+            style={{
+              marginRight: "0.375rem",
+              width: "1.25rem",
+              height: "1.25rem",
+            }}
           />
           <div>Expires</div>
         </div>
