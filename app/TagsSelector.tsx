@@ -53,11 +53,8 @@ const TagsSelector: React.FC<Props> = ({ value, onSelect }) => {
   const animatedComponents = makeAnimated();
 
   const handleChange = (selectedOptions: any) => {
-    const newSelectedTags = selectedOptions
-      ? selectedOptions.map((option: any) => option.value)
-      : [];
-    setSelectedTags(newSelectedTags);
-    onSelect && onSelect(newSelectedTags);
+    setSelectedTags(selectedOptions || []);
+    onSelect && onSelect(selectedOptions || []);
   };
 
   const customStyles = {
@@ -97,26 +94,12 @@ const TagsSelector: React.FC<Props> = ({ value, onSelect }) => {
     },
   };
 
-  const getLabelFromValue = (value: string) => {
-    for (const tag of tags) {
-      for (const option of tag.options) {
-        if (option.value === value) {
-          return option.label;
-        }
-      }
-    }
-    return value;
-  };
-
   return (
     <CreatableSelect
       components={animatedComponents}
       isMulti
       options={tags}
-      value={selectedTags.map((tag) => ({
-        value: tag,
-        label: getLabelFromValue(tag),
-      }))}
+      value={selectedTags}
       onChange={handleChange}
       placeholder="Select or create a tags..."
       isClearable
