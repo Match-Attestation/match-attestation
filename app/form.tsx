@@ -1,10 +1,11 @@
 "use client";
 
 import clsx from "clsx";
-import { useOptimistic, useRef, useState, useTransition } from "react";
+import { useRef, useState } from "react";
 import { saveMatch } from "./actions";
 import { v4 as uuidv4 } from "uuid";
-import { MATCH_EXPIRY, Match } from "./types";
+import FarcasterUserSelector from "./FarcasterUserSelector";
+import { MATCH_EXPIRY, Match, UserProfile } from "./types";
 import Link from "next/link";
 
 type MatchState = {
@@ -20,7 +21,7 @@ export function MatchCreateForm() {
     id: uuidv4(),
     created_at: new Date().getTime(),
     title: "",
-    users: ["", ""],
+    users: [null, null],
     winners: [],
     referee: "",
     attestationUID: null,
@@ -32,9 +33,9 @@ export function MatchCreateForm() {
     maxUsersCount: 16,
   });
 
-  const handleUserChange = (index: number, value: string) => {
+  const handleUserChange = (index: number, newUser: UserProfile) => {
     const users = [...state.newMatch.users];
-    users[index] = value;
+    users[index] = newUser;
     setState((prevState) => ({
       ...prevState,
       newMatch: {
@@ -49,7 +50,7 @@ export function MatchCreateForm() {
       ...prevState,
       newMatch: {
         ...prevState.newMatch,
-        users: [...prevState.newMatch.users, ""],
+        users: [...prevState.newMatch.users, null as any],
       },
     }));
   };
@@ -118,6 +119,7 @@ export function MatchCreateForm() {
             type="text"
             name="referee"
           />
+
           <div className="flex flex-row items-center text-left text-xl font-bold mt-4">
             <img
               src="/emojis/ninja.png"
@@ -126,25 +128,16 @@ export function MatchCreateForm() {
             <div>Participants</div>
           </div>
           {state.newMatch.users.map((user, index) => (
-            <div
-              className={`flex items-center space-x-2 ${
-                index == 0 ? "mt-1" : "mt-2"
-              }`}
-            >
-              <input
-                key={index}
-                value={user}
-                onChange={(e) => handleUserChange(index, e.target.value)}
-                required
-                className="flex px-3 py-2 text-lg block w-full border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
-                placeholder={`Participant №${index + 1}`}
-                aria-label={`Participant №${index + 1}`}
-                type="text"
-                maxLength={48}
-              />
+            <div className="flex flex-row flex-nowrap mt-1" key={index}>
+              <div className="grow">
+                <FarcasterUserSelector
+                  value={user}
+                  onSelect={(event) => handleUserChange(index, event as any)}
+                />
+              </div>
               {state.newMatch.users.length > 2 && (
                 <button
-                  className={`flex items-center justify-center text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700 ${
+                  className={`ml-1 flex items-center justify-center text-lg border bg-blue-500 text-white rounded-md focus:outline-none hover:bg-blue-700 ${
                     state.pending
                       ? "bg-gray-500 hover:bg-gray-600 cursor-not-allowed"
                       : ""
@@ -235,7 +228,7 @@ export function DecideMatchWinnerForm({ match }: { match: Match }) {
         </div>
         <div className="text-left flex flex-col text-md">
           {match.users.map((user, index) => (
-            <div key={index}>{index + 1 + ". " + user}</div>
+            <FarcasterUserSelector key={index} value={user} />
           ))}
         </div>
         <div className="flex flex-row items-center text-left text-xl font-bold mt-4">
