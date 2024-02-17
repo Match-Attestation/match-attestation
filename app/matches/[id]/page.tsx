@@ -10,6 +10,7 @@ async function getMatch(id: string): Promise<Match> {
     id: "",
     created_at: 0,
     title: "No match found",
+    tags: [],
     users: [],
     winners: [],
     referee: "",
