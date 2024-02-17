@@ -13,6 +13,7 @@ async function getMatch(id: string): Promise<Match> {
     users: [],
     winners: [],
     referee: "",
+    attestationUID: null,
   };
 
   try {
@@ -50,7 +51,7 @@ export async function generateMetadata(
     input: {
       text: "Comma separated list of winners",
     },
-    postUrl: `${process.env["HOST"]}/api/attest?id=${id}`,
+    postUrl: `${process.env["HOST"]}/api/submit?id=${id}`,
   });
 
   return {
@@ -79,7 +80,9 @@ export default async function Page({ params }: { params: { id: string } }) {
           Farcaster Match attestation
         </h1>
         <h2 className="text-md sm:text-xl mx-4">
-          Create a new Match with up to 20 People / Teams
+          Create a Match with up to 16 Participants,
+          <br />
+          with the results published on blockchain
         </h2>
         <div
           className="flex flex-wrap items-center justify-around my-8 w-full bg-white rounded-md shadow-xl h-full border border-gray-100"
